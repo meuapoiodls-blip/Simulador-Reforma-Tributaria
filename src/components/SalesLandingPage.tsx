@@ -12,8 +12,12 @@ import {
   ShieldCheck,
   ChevronRight,
   HelpCircle,
-  ChevronDown
+  ChevronDown,
+  Laptop,
+  Smartphone
 } from "lucide-react";
+
+import laptopMobileMockup from "../assets/images/laptop_mobile_mockup_1787403587903.jpg";
 
 interface SalesLandingPageProps {
   onOpenSimulator?: () => void;
@@ -85,28 +89,28 @@ export const SalesLandingPage: React.FC<SalesLandingPageProps> = ({
     <div className="w-full bg-[#081b3a] text-slate-100 font-sans antialiased selection:bg-blue-600 selection:text-white">
       
       {/* =========================================================================
-          1. HERO SECTION (Paleta Azul Marinho Real com Mockup Fiel da Imagem)
+          1. HERO SECTION (Mais Horizontal: Notebook + Celular Sutis e Elegantes)
          ========================================================================= */}
-      <section className="relative pt-10 pb-20 md:pt-14 md:pb-24 overflow-hidden border-b border-blue-800/40">
-        {/* Glows de iluminação em tons de azul royal e ciano */}
-        <div className="absolute top-0 left-1/4 w-[600px] h-[450px] bg-blue-600/20 blur-[150px] rounded-full pointer-events-none" />
-        <div className="absolute top-1/3 right-0 w-[550px] h-[450px] bg-sky-500/15 blur-[150px] rounded-full pointer-events-none" />
+      <section className="relative pt-8 pb-16 md:pt-12 md:pb-20 overflow-hidden border-b border-blue-800/40">
+        {/* Iluminação de fundo */}
+        <div className="absolute top-0 left-1/4 w-[600px] h-[350px] bg-blue-600/20 blur-[140px] rounded-full pointer-events-none" />
+        <div className="absolute top-1/4 right-0 w-[500px] h-[350px] bg-sky-500/15 blur-[140px] rounded-full pointer-events-none" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
             
             {/* Coluna Esquerda: Textos & CTA */}
-            <div className="lg:col-span-5 space-y-6 text-left">
+            <div className="lg:col-span-5 space-y-5 text-left">
               {/* Badge de Edição */}
-              <div className="inline-flex items-center gap-2 bg-[#0d2752] border border-blue-600/60 text-slate-200 text-xs font-semibold px-3 py-1.5 rounded-full shadow-md">
+              <div className="inline-flex items-center gap-2 bg-[#0d2752] border border-blue-500/60 text-slate-200 text-xs font-semibold px-3 py-1.5 rounded-full shadow-md">
                 <span>🔥</span>
-                <span className="tracking-wider uppercase text-[11px] font-bold text-sky-200">
+                <span className="tracking-wider uppercase text-[11px] font-bold text-sky-300">
                   Manual Tributário • Edição Especial para Contadores
                 </span>
               </div>
 
               {/* Título Principal SEM PONTO FINAL */}
-              <h1 className="text-4xl sm:text-5xl lg:text-[50px] font-black text-white tracking-tight leading-[1.12]">
+              <h1 className="text-3xl sm:text-4xl lg:text-[46px] font-black text-white tracking-tight leading-[1.12]">
                 Qual enquadramento <br />
                 traz mais <br />
                 economia? <br />
@@ -116,18 +120,18 @@ export const SalesLandingPage: React.FC<SalesLandingPageProps> = ({
               </h1>
 
               {/* Subtítulo */}
-              <p className="text-slate-200 text-sm sm:text-base leading-relaxed font-normal max-w-lg">
+              <p className="text-slate-200 text-xs sm:text-sm leading-relaxed font-normal max-w-lg">
                 Avalie o Simples Nacional padrão, o formato híbrido (IBS e CBS destacados) e o Lucro Presumido no período de 2027 a 2033. Gere pareceres consultivos com a identidade visual do seu escritório.
               </p>
 
               {/* Botão CTA Principal + Checklist */}
-              <div className="pt-2">
+              <div className="pt-1">
                 <button
                   id="hero-btn-comprar"
                   onClick={() => onOpenCheckout("47")}
-                  className="w-full sm:w-auto bg-[#1d63d8] hover:bg-[#2563eb] text-white font-bold text-base px-8 py-4 rounded-xl shadow-xl shadow-blue-950/80 hover:shadow-blue-600/50 transition-all flex items-center justify-center gap-3 cursor-pointer group"
+                  className="w-full sm:w-auto bg-[#1d63d8] hover:bg-[#2563eb] text-white font-bold text-sm sm:text-base px-7 py-3.5 rounded-xl shadow-xl shadow-blue-950/80 hover:shadow-blue-600/50 transition-all flex items-center justify-center gap-3 cursor-pointer group"
                 >
-                  <span className="uppercase tracking-wide text-sm font-extrabold">Adquirir o Manual Tributário por R$ 47</span>
+                  <span className="uppercase tracking-wide text-xs sm:text-sm font-extrabold">Adquirir o Manual Tributário por R$ 47</span>
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </button>
 
@@ -136,437 +140,59 @@ export const SalesLandingPage: React.FC<SalesLandingPageProps> = ({
               </div>
             </div>
 
-            {/* Coluna Direita: FOTO/MOCKUP REAL DO SIMULADOR (Idêntico ao image.png anexado) */}
-            <div id="simulador-preview-section" className="lg:col-span-7">
-              <div className="bg-[#0b162c] border border-blue-700/60 rounded-2xl shadow-2xl shadow-black/80 overflow-hidden relative">
-                
-                {/* Header do Mockup do Navegador */}
-                <div className="bg-[#081224] px-4 py-3 border-b border-blue-900/60 flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 rounded-full bg-sky-500/80" />
-                    <div className="w-3 h-3 rounded-full bg-sky-400/60" />
-                    <div className="w-3 h-3 rounded-full bg-blue-400/40" />
-                  </div>
-                  <div className="text-right">
-                    <span className="text-[12px] font-extrabold text-white uppercase tracking-wider font-mono">
-                      TELA REAL DO SIMULADOR
-                    </span>
-                  </div>
+            {/* Coluna Direita: MOCKUP 3D REALISTA DE NOTEBOOK + CELULAR */}
+            <div id="simulador-preview-section" className="lg:col-span-7 relative flex items-center justify-center">
+              
+              {/* Brilho e Ambient Light ao redor do Mockup */}
+              <div className="absolute inset-0 bg-gradient-to-tr from-blue-600/30 via-sky-400/20 to-transparent blur-3xl rounded-full -z-10" />
+
+              {/* Imagem do Mockup 3D Realista */}
+              <div className="relative w-full max-w-[640px] group transition-all duration-300">
+                <div className="overflow-hidden rounded-2xl border border-blue-500/30 bg-[#0b1f44]/80 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.8)] backdrop-blur-sm p-2 sm:p-3">
+                  <img
+                    src={laptopMobileMockup}
+                    alt="Simulador Manual Tributário no Computador e Celular"
+                    referrerPolicy="no-referrer"
+                    className="w-full h-auto object-cover rounded-xl transition-transform duration-500 group-hover:scale-[1.02]"
+                  />
                 </div>
 
-                {/* CORPO INTERNO BRANCO / OFF-WHITE (Exatamente como no screenshot fornecido) */}
-                <div className="bg-white text-slate-800 p-4 sm:p-5 space-y-4 text-xs font-sans">
-                  
-                  {/* Top Notice de Premissas com Selo Azul "IMAGEM REAL" */}
-                  <div className="flex items-center justify-between gap-3 p-3 rounded-xl bg-slate-50 border border-slate-200">
-                    <div className="text-left space-y-0.5">
-                      <div className="flex items-center gap-1.5 text-xs font-bold text-blue-800">
-                        <span className="text-blue-600 text-[10px]">▶</span>
-                        <span>Premissas avançadas: ajuste as alíquotas aqui</span>
-                      </div>
-                      <p className="text-[10.5px] text-slate-500 leading-tight">
-                        Alíquotas do IBS e CBS, crédito, composição do DAS e dados do Lucro Presumido. São estimativas, ajuste por cliente e confirme a base legal.
-                      </p>
-                    </div>
-                    <span className="bg-[#1d63d8] text-white text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg shadow-md shrink-0 tracking-wider">
-                      IMAGEM REAL
-                    </span>
-                  </div>
+                {/* Floating Badge Sutil 1: Compatibilidade */}
+                <div className="absolute -top-3 -left-2 sm:left-4 bg-[#0d2752]/95 border border-sky-400/50 text-white text-[11px] font-bold px-3 py-1.5 rounded-full shadow-lg flex items-center gap-1.5 backdrop-blur-md">
+                  <Laptop className="w-3.5 h-3.5 text-sky-400" />
+                  <span>Desktop & Notebook</span>
+                </div>
 
-                  {/* Título de Resultados da Simulação */}
-                  <div className="border-b border-slate-200 pb-2 text-left">
-                    <div className="text-[11px] font-bold text-slate-900 uppercase tracking-wide">
-                      2. RESULTADO POR MÊS • ANO DE 2027
-                    </div>
-                    <div className="flex items-center gap-1.5 text-[11px] text-slate-600 mt-0.5">
-                      <span className="inline-block w-2.5 h-2.5 rounded-sm bg-blue-600 shrink-0" />
-                      <span><strong>Comparativo de carga total</strong> Guia única (tradicional) x Pagar por fora (híbrido) x Lucro Presumido - valores por mês</span>
-                    </div>
-                  </div>
-
-                  {/* 3 Colunas dos Cenários de 2027 */}
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-left">
-                    
-                    {/* Coluna 1: Guia Única (Simples Tradicional) */}
-                    <div className="bg-slate-50 border border-slate-200 rounded-xl overflow-hidden shadow-sm flex flex-col justify-between">
-                      <div>
-                        {/* Topo Escuro */}
-                        <div className="bg-[#111827] text-white p-3 space-y-1.5">
-                          <div className="flex items-center justify-between">
-                            <span className="text-[9.5px] font-bold text-slate-200 uppercase tracking-wider">
-                              GUIA ÚNICA • SIMPLES TRADICIONAL
-                            </span>
-                          </div>
-                          <span className="inline-block bg-[#059669] text-white text-[8.5px] font-extrabold px-1.5 py-0.5 rounded uppercase">
-                            MAIS BARATO
-                          </span>
-                          <div className="text-2xl font-black text-white font-mono tracking-tight">
-                            R$ 10.443
-                          </div>
-                          <div className="text-[9.5px] text-slate-300">
-                            Sai do bolso por mês • receita R$ 100.000
-                          </div>
-
-                          {/* Tags azuis */}
-                          <div className="flex flex-wrap gap-1 pt-1">
-                            <span className="bg-blue-900/80 text-sky-200 text-[8px] font-semibold px-1.5 py-0.5 rounded">
-                              Alíq. efetiva 10,4%
-                            </span>
-                            <span className="bg-blue-900/80 text-sky-200 text-[8px] font-semibold px-1.5 py-0.5 rounded">
-                              Faixa 4ª
-                            </span>
-                            <span className="bg-blue-900/80 text-sky-200 text-[8px] font-semibold px-1.5 py-0.5 rounded">
-                              RBT12 R$ 1.000.000
-                            </span>
-                          </div>
-                        </div>
-
-                        {/* Breakdown lines */}
-                        <div className="p-3 space-y-1 text-[10px] text-slate-700">
-                          <div className="flex items-center justify-between">
-                            <span className="w-14">IBS/CBS</span>
-                            <div className="flex-1 mx-2 h-1.5 bg-slate-200 rounded-full overflow-hidden">
-                              <div className="w-[30%] h-full bg-blue-600 rounded-full" />
-                            </div>
-                            <span className="font-mono font-semibold text-slate-900">R$ 1.625</span>
-                          </div>
-                          <div className="flex items-center justify-between">
-                            <span className="w-14">IRPJ</span>
-                            <div className="flex-1 mx-2 h-1.5 bg-slate-200 rounded-full overflow-hidden">
-                              <div className="w-[10%] h-full bg-blue-600 rounded-full" />
-                            </div>
-                            <span className="font-mono font-semibold text-slate-900">R$ 401</span>
-                          </div>
-                          <div className="flex items-center justify-between">
-                            <span className="w-14">CSLL</span>
-                            <div className="flex-1 mx-2 h-1.5 bg-slate-200 rounded-full overflow-hidden">
-                              <div className="w-[8%] h-full bg-blue-600 rounded-full" />
-                            </div>
-                            <span className="font-mono font-semibold text-slate-900">R$ 366</span>
-                          </div>
-                          <div className="flex items-center justify-between">
-                            <span className="w-14">IPI</span>
-                            <div className="flex-1 mx-2 text-center text-slate-300">—</div>
-                            <span className="font-mono text-slate-400">—</span>
-                          </div>
-                          <div className="flex items-center justify-between">
-                            <span className="w-14">CPP/INSS</span>
-                            <div className="flex-1 mx-2 h-1.5 bg-slate-200 rounded-full overflow-hidden">
-                              <div className="w-[50%] h-full bg-blue-600 rounded-full" />
-                            </div>
-                            <span className="font-mono font-semibold text-slate-900">R$ 4.452</span>
-                          </div>
-                          <div className="flex items-center justify-between">
-                            <span className="w-14">ICMS</span>
-                            <div className="flex-1 mx-2 h-1.5 bg-slate-200 rounded-full overflow-hidden">
-                              <div className="w-[20%] h-full bg-blue-600 rounded-full" />
-                            </div>
-                            <span className="font-mono font-semibold text-slate-900">R$ 1.437</span>
-                          </div>
-                          <div className="flex items-center justify-between">
-                            <span className="w-14">ISS</span>
-                            <div className="flex-1 mx-2 h-1.5 bg-slate-200 rounded-full overflow-hidden">
-                              <div className="w-[30%] h-full bg-blue-600 rounded-full" />
-                            </div>
-                            <span className="font-mono font-semibold text-slate-900">R$ 2.083</span>
-                          </div>
-                          <div className="flex items-center justify-between">
-                            <span className="w-14">Custo extra</span>
-                            <div className="flex-1 mx-2 text-center text-slate-300">—</div>
-                            <span className="font-mono text-slate-400">—</span>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Rodapé do Card */}
-                      <div className="p-3 bg-white border-t border-slate-200 space-y-1 text-[10px]">
-                        <div className="flex justify-between items-center">
-                          <span className="text-slate-600 font-semibold">Total por mês</span>
-                          <span className="font-black text-[#059669] font-mono text-xs">R$ 10.443</span>
-                        </div>
-                        <div className="flex justify-between items-center text-slate-500">
-                          <span>Crédito ao cliente PJ</span>
-                          <span className="font-mono font-semibold text-slate-700">R$ 975</span>
-                        </div>
-                        <div className="pt-1 text-[9px] text-blue-600 font-bold hover:underline cursor-pointer">
-                          • Ver o cálculo
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Coluna 2: Pagar por Fora (Híbrido) */}
-                    <div className="bg-slate-50 border border-slate-200 rounded-xl overflow-hidden shadow-sm flex flex-col justify-between">
-                      <div>
-                        {/* Topo Azul Royal */}
-                        <div className="bg-[#3444c5] text-white p-3 space-y-1.5">
-                          <div className="flex items-center justify-between">
-                            <span className="text-[9.5px] font-bold text-slate-200 uppercase tracking-wider">
-                              PAGAR POR FORA • REGIME HÍBRIDO
-                            </span>
-                          </div>
-                          <div className="h-4" />
-                          <div className="text-2xl font-black text-white font-mono tracking-tight">
-                            R$ 15.348
-                          </div>
-                          <div className="text-[9.5px] text-slate-200">
-                            Sai do bolso por mês • receita R$ 100.000
-                          </div>
-
-                          {/* Tags pílulas */}
-                          <div className="flex flex-wrap gap-1 pt-1">
-                            <span className="bg-blue-900/80 text-sky-200 text-[8px] font-semibold px-1.5 py-0.5 rounded">
-                              Alíq. total 15%
-                            </span>
-                            <span className="bg-blue-900/80 text-sky-200 text-[8px] font-semibold px-1.5 py-0.5 rounded">
-                              IBS + CBS R$ 6.230
-                            </span>
-                            <span className="bg-blue-900/80 text-sky-200 text-[8px] font-semibold px-1.5 py-0.5 rounded">
-                              DAS R$ 8.818
-                            </span>
-                          </div>
-                        </div>
-
-                        {/* Breakdown lines */}
-                        <div className="p-3 space-y-1 text-[10px] text-slate-700">
-                          <div className="flex items-center justify-between">
-                            <span className="w-14">IBS/CBS</span>
-                            <div className="flex-1 mx-2 h-1.5 bg-slate-200 rounded-full overflow-hidden">
-                              <div className="w-[75%] h-full bg-blue-600 rounded-full" />
-                            </div>
-                            <span className="font-mono font-semibold text-slate-900">R$ 6.230</span>
-                          </div>
-                          <div className="flex items-center justify-between">
-                            <span className="w-14">IRPJ</span>
-                            <div className="flex-1 mx-2 h-1.5 bg-slate-200 rounded-full overflow-hidden">
-                              <div className="w-[10%] h-full bg-blue-600 rounded-full" />
-                            </div>
-                            <span className="font-mono font-semibold text-slate-900">R$ 401</span>
-                          </div>
-                          <div className="flex items-center justify-between">
-                            <span className="w-14">CSLL</span>
-                            <div className="flex-1 mx-2 h-1.5 bg-slate-200 rounded-full overflow-hidden">
-                              <div className="w-[8%] h-full bg-blue-600 rounded-full" />
-                            </div>
-                            <span className="font-mono font-semibold text-slate-900">R$ 366</span>
-                          </div>
-                          <div className="flex items-center justify-between">
-                            <span className="w-14">IPI</span>
-                            <div className="flex-1 mx-2 text-center text-slate-300">—</div>
-                            <span className="font-mono text-slate-400">—</span>
-                          </div>
-                          <div className="flex items-center justify-between">
-                            <span className="w-14">CPP/INSS</span>
-                            <div className="flex-1 mx-2 h-1.5 bg-slate-200 rounded-full overflow-hidden">
-                              <div className="w-[50%] h-full bg-blue-600 rounded-full" />
-                            </div>
-                            <span className="font-mono font-semibold text-slate-900">R$ 4.452</span>
-                          </div>
-                          <div className="flex items-center justify-between">
-                            <span className="w-14">ICMS</span>
-                            <div className="flex-1 mx-2 h-1.5 bg-slate-200 rounded-full overflow-hidden">
-                              <div className="w-[20%] h-full bg-blue-600 rounded-full" />
-                            </div>
-                            <span className="font-mono font-semibold text-slate-900">R$ 1.437</span>
-                          </div>
-                          <div className="flex items-center justify-between">
-                            <span className="w-14">ISS</span>
-                            <div className="flex-1 mx-2 h-1.5 bg-slate-200 rounded-full overflow-hidden">
-                              <div className="w-[30%] h-full bg-blue-600 rounded-full" />
-                            </div>
-                            <span className="font-mono font-semibold text-slate-900">R$ 2.083</span>
-                          </div>
-                          <div className="flex items-center justify-between">
-                            <span className="w-14">Custo extra</span>
-                            <div className="flex-1 mx-2 h-1.5 bg-slate-200 rounded-full overflow-hidden">
-                              <div className="w-[8%] h-full bg-blue-600 rounded-full" />
-                            </div>
-                            <span className="font-mono font-semibold text-slate-900">R$ 300</span>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Rodapé do Card */}
-                      <div className="p-3 bg-white border-t border-slate-200 space-y-1 text-[10px]">
-                        <div className="flex justify-between items-center">
-                          <span className="text-slate-600 font-semibold">Total por mês</span>
-                          <span className="font-black text-slate-900 font-mono text-xs">R$ 15.348</span>
-                        </div>
-                        <div className="flex justify-between items-center text-slate-500">
-                          <span>Crédito ao cliente PJ</span>
-                          <span className="font-mono font-bold text-[#059669]">R$ 5.340</span>
-                        </div>
-                        <div className="pt-1 text-[9px] text-blue-600 font-bold hover:underline cursor-pointer">
-                          • Ver o cálculo
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Coluna 3: Lucro Presumido */}
-                    <div className="bg-slate-50 border border-slate-200 rounded-xl overflow-hidden shadow-sm flex flex-col justify-between">
-                      <div>
-                        {/* Topo Verde Floresta */}
-                        <div className="bg-[#065f46] text-white p-3 space-y-1.5">
-                          <div className="flex items-center justify-between">
-                            <span className="text-[9.5px] font-bold text-slate-200 uppercase tracking-wider">
-                              LUCRO PRESUMIDO
-                            </span>
-                          </div>
-                          <div className="h-4" />
-                          <div className="text-2xl font-black text-white font-mono tracking-tight">
-                            R$ 21.810
-                          </div>
-                          <div className="text-[9.5px] text-slate-200">
-                            Sai do bolso por mês • receita R$ 100.000
-                          </div>
-
-                          {/* Tags pílulas */}
-                          <div className="flex flex-wrap gap-1 pt-1">
-                            <span className="bg-emerald-900/80 text-emerald-200 text-[8px] font-semibold px-1.5 py-0.5 rounded">
-                              Alíq. total 21,8%
-                            </span>
-                            <span className="bg-emerald-900/80 text-emerald-200 text-[8px] font-semibold px-1.5 py-0.5 rounded">
-                              IRPJ + CSLL R$ 4.980
-                            </span>
-                            <span className="bg-emerald-900/80 text-emerald-200 text-[8px] font-semibold px-1.5 py-0.5 rounded">
-                              INSS R$ 4.200
-                            </span>
-                          </div>
-                        </div>
-
-                        {/* Breakdown lines */}
-                        <div className="p-3 space-y-1 text-[10px] text-slate-700">
-                          <div className="flex items-center justify-between">
-                            <span className="w-14">IBS/CBS</span>
-                            <div className="flex-1 mx-2 h-1.5 bg-slate-200 rounded-full overflow-hidden">
-                              <div className="w-[75%] h-full bg-blue-600 rounded-full" />
-                            </div>
-                            <span className="font-mono font-semibold text-slate-900">R$ 6.230</span>
-                          </div>
-                          <div className="flex items-center justify-between">
-                            <span className="w-14">IRPJ</span>
-                            <div className="flex-1 mx-2 h-1.5 bg-slate-200 rounded-full overflow-hidden">
-                              <div className="w-[40%] h-full bg-blue-600 rounded-full" />
-                            </div>
-                            <span className="font-mono font-semibold text-slate-900">R$ 3.000</span>
-                          </div>
-                          <div className="flex items-center justify-between">
-                            <span className="w-14">CSLL</span>
-                            <div className="flex-1 mx-2 h-1.5 bg-slate-200 rounded-full overflow-hidden">
-                              <div className="w-[28%] h-full bg-blue-600 rounded-full" />
-                            </div>
-                            <span className="font-mono font-semibold text-slate-900">R$ 1.980</span>
-                          </div>
-                          <div className="flex items-center justify-between">
-                            <span className="w-14">IPI</span>
-                            <div className="flex-1 mx-2 text-center text-slate-300">—</div>
-                            <span className="font-mono text-slate-400">—</span>
-                          </div>
-                          <div className="flex items-center justify-between">
-                            <span className="w-14">CPP/INSS</span>
-                            <div className="flex-1 mx-2 h-1.5 bg-slate-200 rounded-full overflow-hidden">
-                              <div className="w-[50%] h-full bg-blue-600 rounded-full" />
-                            </div>
-                            <span className="font-mono font-semibold text-slate-900">R$ 4.200</span>
-                          </div>
-                          <div className="flex items-center justify-between">
-                            <span className="w-14">ICMS</span>
-                            <div className="flex-1 mx-2 h-1.5 bg-slate-200 rounded-full overflow-hidden">
-                              <div className="w-[45%] h-full bg-blue-600 rounded-full" />
-                            </div>
-                            <span className="font-mono font-semibold text-slate-900">R$ 3.600</span>
-                          </div>
-                          <div className="flex items-center justify-between">
-                            <span className="w-14">ISS</span>
-                            <div className="flex-1 mx-2 h-1.5 bg-slate-200 rounded-full overflow-hidden">
-                              <div className="w-[35%] h-full bg-blue-600 rounded-full" />
-                            </div>
-                            <span className="font-mono font-semibold text-slate-900">R$ 2.500</span>
-                          </div>
-                          <div className="flex items-center justify-between">
-                            <span className="w-14">Custo extra</span>
-                            <div className="flex-1 mx-2 h-1.5 bg-slate-200 rounded-full overflow-hidden">
-                              <div className="w-[8%] h-full bg-blue-600 rounded-full" />
-                            </div>
-                            <span className="font-mono font-semibold text-slate-900">R$ 300</span>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Rodapé do Card */}
-                      <div className="p-3 bg-white border-t border-slate-200 space-y-1 text-[10px]">
-                        <div className="flex justify-between items-center">
-                          <span className="text-slate-600 font-semibold">Total por mês</span>
-                          <span className="font-black text-slate-900 font-mono text-xs">R$ 21.810</span>
-                        </div>
-                        <div className="flex justify-between items-center text-slate-500">
-                          <span>Crédito ao cliente PJ</span>
-                          <span className="font-mono font-bold text-[#059669]">R$ 12.240</span>
-                        </div>
-                        <div className="pt-1 text-[9px] text-blue-600 font-bold hover:underline cursor-pointer">
-                          • Ver o cálculo
-                        </div>
-                      </div>
-                    </div>
-
-                  </div>
-
-                  {/* 2 Boxes de Diferença de Custo e Crédito Extra */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1 text-left">
-                    <div className="p-3 rounded-xl bg-slate-50 border border-slate-200">
-                      <div className="text-[11px] font-bold text-slate-800">Diferença de custo (por fora x guia única)</div>
-                      <div className="text-lg font-black text-[#1d63d8] font-mono mt-0.5">R$ 4.905</div>
-                      <div className="text-[10px] text-slate-500 mt-0.5">
-                        Quanto pagar por fora custa a mais (ou a menos) que a guia única, por mês.
-                      </div>
-                    </div>
-
-                    <div className="p-3 rounded-xl bg-slate-50 border border-slate-200">
-                      <div className="text-[11px] font-bold text-slate-800">Crédito extra para os clientes</div>
-                      <div className="text-lg font-black text-[#1d63d8] font-mono mt-0.5">R$ 4.365</div>
-                      <div className="text-[10px] text-slate-500 mt-0.5">
-                        Quanto de crédito a mais o cliente passa a ter pagando por fora. Ajuda a vender mais para empresas.
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Caixa Amarela/Creme de Recomendação Orientativa */}
-                  <div className="p-3.5 rounded-xl bg-[#fef9c3]/90 border border-amber-300 text-[10.5px] text-amber-950 leading-relaxed text-left space-y-1">
-                    <div className="font-extrabold text-amber-900 tracking-wider text-[10px] uppercase">
-                      RECOMENDAÇÃO ORIENTATIVA
-                    </div>
-                    <p>
-                      <strong>Caso intermediário:</strong> em 2027, o custo extra de pagar por fora (R$ 4.905) ainda pesa mais que o ganho de crédito (R$ 4.365). Reavalie ano a ano mudando o ano no seletor acima, porque o crédito da guia única cresce ao longo da transição.
-                    </p>
-                    <p>
-                      <strong>Lucro Presumido:</strong> neste ano apareceu mais caro (R$ 21.810), então provavelmente não compensa sair do Simples Nacional.
-                    </p>
-                  </div>
-
+                {/* Floating Badge Sutil 2: Celular */}
+                <div className="absolute -bottom-3 -right-2 sm:right-4 bg-[#0d2752]/95 border border-emerald-400/50 text-white text-[11px] font-bold px-3 py-1.5 rounded-full shadow-lg flex items-center gap-1.5 backdrop-blur-md">
+                  <Smartphone className="w-3.5 h-3.5 text-emerald-400" />
+                  <span>100% no Celular</span>
                 </div>
               </div>
+
             </div>
 
           </div>
 
           {/* 4 Cards de Métricas Inferiores */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-16">
-            <div className="bg-[#0e2750]/80 border border-blue-700/50 rounded-xl p-5 text-left shadow-lg">
-              <div className="text-3xl sm:text-4xl font-extrabold text-white font-mono">3</div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-12">
+            <div className="bg-[#0e2750]/80 border border-blue-700/50 rounded-xl p-4 sm:p-5 text-left shadow-lg">
+              <div className="text-2xl sm:text-3xl font-extrabold text-white font-mono">3</div>
               <div className="text-xs font-bold text-slate-200 uppercase tracking-wider mt-1">Modelos tributários avaliados</div>
             </div>
 
-            <div className="bg-[#0e2750]/80 border border-blue-700/50 rounded-xl p-5 text-left shadow-lg">
-              <div className="text-3xl sm:text-4xl font-extrabold text-white font-mono">7</div>
+            <div className="bg-[#0e2750]/80 border border-blue-700/50 rounded-xl p-4 sm:p-5 text-left shadow-lg">
+              <div className="text-2xl sm:text-3xl font-extrabold text-white font-mono">7</div>
               <div className="text-xs font-bold text-slate-200 uppercase tracking-wider mt-1">Exercícios projetados</div>
             </div>
 
-            <div className="bg-[#0e2750]/80 border border-blue-700/50 rounded-xl p-5 text-left shadow-lg">
-              <div className="text-3xl sm:text-4xl font-extrabold text-white font-mono">1</div>
+            <div className="bg-[#0e2750]/80 border border-blue-700/50 rounded-xl p-4 sm:p-5 text-left shadow-lg">
+              <div className="text-2xl sm:text-3xl font-extrabold text-white font-mono">1</div>
               <div className="text-xs font-bold text-slate-200 uppercase tracking-wider mt-1">Parecer pronto para entrega</div>
             </div>
 
-            <div className="bg-[#0e2750]/80 border border-blue-700/50 rounded-xl p-5 text-left shadow-lg">
-              <div className="text-3xl sm:text-4xl font-extrabold text-white font-mono">100%</div>
+            <div className="bg-[#0e2750]/80 border border-blue-700/50 rounded-xl p-4 sm:p-5 text-left shadow-lg">
+              <div className="text-2xl sm:text-3xl font-extrabold text-white font-mono">100%</div>
               <div className="text-xs font-bold text-slate-200 uppercase tracking-wider mt-1">Adaptável ao seu escritório</div>
             </div>
           </div>
@@ -576,33 +202,129 @@ export const SalesLandingPage: React.FC<SalesLandingPageProps> = ({
 
 
       {/* =========================================================================
-          2. SEÇÃO: O NOVO CENÁRIO (Fundo Branco Iluminado)
+          2. SEÇÃO: NÃO É UMA PLANILHA GENÉRICA (Fundo Branco - Conforme Imagem)
          ========================================================================= */}
       <section className="py-20 bg-white text-slate-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
             
-            <div className="lg:col-span-6 space-y-3">
+            {/* Esquerda: Textos, Título e Checklist */}
+            <div className="lg:col-span-6 space-y-5 text-left">
               <span className="text-xs font-bold text-[#1d63d8] uppercase tracking-widest block">
-                O DESAFIO CONSULTIVO
+                UMA FERRAMENTA DE ATENDIMENTO
               </span>
+
               <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-extrabold text-slate-950 tracking-tight leading-[1.15]">
-                Seu cliente busca respostas práticas sobre impacto financeiro
+                Não é uma planilha genérica. <br className="hidden sm:inline" />
+                É clareza para a conversa com o cliente
               </h2>
+
+              <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
+                Preencha os dados da empresa, escolha o ano da análise e visualize como cada caminho se comporta. O simulador organiza as informações que realmente ajudam na decisão.
+              </p>
+
+              {/* 4 Checks Azuis */}
+              <div className="space-y-2.5 pt-2 text-sm text-slate-800 font-medium">
+                <div className="flex items-center gap-2.5">
+                  <span className="text-blue-600 font-bold text-base">✓</span>
+                  <span>Comparativo visual dos regimes</span>
+                </div>
+                <div className="flex items-center gap-2.5">
+                  <span className="text-blue-600 font-bold text-base">✓</span>
+                  <span>Detalhamento dos principais tributos</span>
+                </div>
+                <div className="flex items-center gap-2.5">
+                  <span className="text-blue-600 font-bold text-base">✓</span>
+                  <span>Recomendação orientativa automática</span>
+                </div>
+                <div className="flex items-center gap-2.5">
+                  <span className="text-blue-600 font-bold text-base">✓</span>
+                  <span>Manual completo de utilização</span>
+                </div>
+              </div>
             </div>
 
-            <div className="lg:col-span-6 space-y-6">
-              <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
-                Empresários não querem jargões legislativos complexos. Eles precisam enxergar claramente o impacto no fluxo de caixa, as vantagens de cada regime e a competitividade comercial.
-              </p>
-              <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
-                Entregar essa clareza exige confrontar alíquotas nominais, regras de créditos cumulativos e a transição gradual sem despender horas montando planilhas manuais.
-              </p>
+            {/* Direita: CARTÕES SOBREPOSTOS SUTIS (Exatamente como na imagem de referência) */}
+            <div className="lg:col-span-6 relative">
               
-              {/* Highlight card com borda esquerda azul */}
-              <div className="bg-slate-50 border-l-4 border-[#1d63d8] p-5 rounded-r-xl shadow-sm text-slate-800 font-semibold text-sm sm:text-base">
-                Com o Manual Tributário, você traduz a complexidade da legislação em pareceres estratégicos e visuais que encantam o cliente
+              {/* Card de Fundo: Comparação Real dentro do Simulador */}
+              <div className="w-[88%] bg-white border border-slate-200 rounded-2xl shadow-xl p-4 text-left space-y-3 transition-transform hover:-translate-y-1">
+                
+                {/* Header sutil */}
+                <div className="flex items-center justify-between pb-2 border-b border-slate-100">
+                  <div className="text-[10px] font-bold text-slate-800">
+                    2. RESULTADO POR MÊS • ANO DE 2027
+                  </div>
+                  <span className="bg-blue-50 text-blue-700 text-[9px] font-extrabold uppercase px-2 py-0.5 rounded">
+                    IMAGEM REAL
+                  </span>
+                </div>
+
+                {/* 3 mini cards */}
+                <div className="grid grid-cols-3 gap-1.5 text-[9px]">
+                  <div className="bg-[#111827] text-white p-2 rounded-lg">
+                    <div className="text-[7.5px] text-emerald-400 font-bold">MAIS BARATO</div>
+                    <div className="font-black text-xs font-mono">R$ 10.443</div>
+                    <div className="text-[7px] text-slate-300">Guia Única</div>
+                  </div>
+
+                  <div className="bg-[#3444c5] text-white p-2 rounded-lg">
+                    <div className="text-[7.5px] text-sky-300 font-bold">REGIME HÍBRIDO</div>
+                    <div className="font-black text-xs font-mono">R$ 15.348</div>
+                    <div className="text-[7px] text-slate-200">IBS/CBS por fora</div>
+                  </div>
+
+                  <div className="bg-[#065f46] text-white p-2 rounded-lg">
+                    <div className="text-[7.5px] text-emerald-300 font-bold">LUCRO PRESUMIDO</div>
+                    <div className="font-black text-xs font-mono">R$ 21.810</div>
+                    <div className="text-[7px] text-slate-200">Presumido</div>
+                  </div>
+                </div>
+
+                {/* Mini linhas de premissas */}
+                <div className="bg-slate-50 p-2 rounded-lg border border-slate-100 text-[8.5px] text-slate-600 flex justify-between">
+                  <span>Diferença no desembolso: <strong>R$ 4.905</strong></span>
+                  <span>Crédito ao cliente PJ: <strong>R$ 4.365</strong></span>
+                </div>
+
+                {/* Legenda de Rodapé do Card */}
+                <div className="text-[9px] font-extrabold text-slate-500 uppercase tracking-wider text-center pt-1">
+                  COMPARAÇÃO REAL DENTRO DO SIMULADOR
+                </div>
               </div>
+
+              {/* Card da Frente Sobreposto: Premissas Ajustáveis por Cliente */}
+              <div className="w-[78%] absolute -bottom-6 right-0 bg-white border border-slate-300 rounded-2xl shadow-2xl p-4 text-left space-y-2.5 z-10 transition-transform hover:scale-102">
+                <div className="flex items-center justify-between pb-1.5 border-b border-slate-100">
+                  <span className="text-[10px] font-bold text-blue-900">1. Entendendo os campos</span>
+                  <span className="text-[8px] bg-slate-100 text-slate-600 px-1.5 py-0.5 rounded font-mono">Premissas</span>
+                </div>
+
+                <div className="space-y-1.5 text-[8.5px] text-slate-600">
+                  <div className="flex justify-between border-b border-slate-50 pb-1">
+                    <span>Alíquota de referência IBS/CBS</span>
+                    <strong className="font-mono text-slate-900">26,5%</strong>
+                  </div>
+                  <div className="flex justify-between border-b border-slate-50 pb-1">
+                    <span>Percentual de compras com crédito</span>
+                    <strong className="font-mono text-slate-900">50,0%</strong>
+                  </div>
+                  <div className="flex justify-between border-b border-slate-50 pb-1">
+                    <span>Folha salarial + pró-labore</span>
+                    <strong className="font-mono text-slate-900">R$ 20.000</strong>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Despesas operacionais e custos</span>
+                    <strong className="font-mono text-slate-900">R$ 30.000</strong>
+                  </div>
+                </div>
+
+                {/* Legenda de Rodapé do Card */}
+                <div className="text-[9px] font-extrabold text-[#1d63d8] uppercase tracking-wider text-center pt-1 border-t border-slate-100">
+                  PREMISSAS AJUSTÁVEIS POR CLIENTE
+                </div>
+              </div>
+
             </div>
 
           </div>
@@ -611,99 +333,179 @@ export const SalesLandingPage: React.FC<SalesLandingPageProps> = ({
 
 
       {/* =========================================================================
-          3. SEÇÃO: VANTAGENS EXCLUSIVAS (6 Cards em Azul Marinho Claro)
+          3. SEÇÃO: PARA QUEM É (Fundo Azul Escuro com 4 Cards Horizontais)
          ========================================================================= */}
-      <section id="beneficios-section" className="py-24 bg-[#081b3a] border-y border-blue-800/40">
+      <section className="py-20 bg-[#081b3a] border-y border-blue-800/40">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+            
+            {/* Esquerda: Eyebrow e Título */}
+            <div className="lg:col-span-5 space-y-4 text-left">
+              <span className="text-xs font-bold text-sky-400 uppercase tracking-widest block">
+                PARA QUEM É
+              </span>
+
+              <h2 className="text-3xl sm:text-4xl lg:text-[44px] font-extrabold text-white tracking-tight leading-[1.15]">
+                Feito para quem precisa orientar empresas com mais segurança
+              </h2>
+            </div>
+
+            {/* Direita: 4 Cards Horizontais com Ponto Branco (Exato da Imagem) */}
+            <div className="lg:col-span-7 space-y-3.5 text-left">
+              
+              {/* Card 1 */}
+              <div className="bg-[#0e2750]/90 border border-blue-700/60 hover:border-blue-500 rounded-xl p-4 sm:p-4.5 transition-all shadow-md flex items-start gap-3.5">
+                <div className="w-2.5 h-2.5 rounded-full bg-white mt-1.5 shrink-0 shadow" />
+                <div>
+                  <h4 className="text-sm sm:text-base font-bold text-white leading-snug">
+                    Contadores e analistas fiscais
+                  </h4>
+                  <p className="text-xs sm:text-sm text-slate-300 mt-0.5">
+                    que querem antecipar as dúvidas dos clientes.
+                  </p>
+                </div>
+              </div>
+
+              {/* Card 2 */}
+              <div className="bg-[#0e2750]/90 border border-blue-700/60 hover:border-blue-500 rounded-xl p-4 sm:p-4.5 transition-all shadow-md flex items-start gap-3.5">
+                <div className="w-2.5 h-2.5 rounded-full bg-white mt-1.5 shrink-0 shadow" />
+                <div>
+                  <h4 className="text-sm sm:text-base font-bold text-white leading-snug">
+                    Escritórios contábeis
+                  </h4>
+                  <p className="text-xs sm:text-sm text-slate-300 mt-0.5">
+                    que buscam um atendimento mais consultivo.
+                  </p>
+                </div>
+              </div>
+
+              {/* Card 3 */}
+              <div className="bg-[#0e2750]/90 border border-blue-700/60 hover:border-blue-500 rounded-xl p-4 sm:p-4.5 transition-all shadow-md flex items-start gap-3.5">
+                <div className="w-2.5 h-2.5 rounded-full bg-white mt-1.5 shrink-0 shadow" />
+                <div>
+                  <h4 className="text-sm sm:text-base font-bold text-white leading-snug">
+                    Profissionais tributários
+                  </h4>
+                  <p className="text-xs sm:text-sm text-slate-300 mt-0.5">
+                    que precisam comparar cenários com agilidade.
+                  </p>
+                </div>
+              </div>
+
+              {/* Card 4 */}
+              <div className="bg-[#0e2750]/90 border border-blue-700/60 hover:border-blue-500 rounded-xl p-4 sm:p-4.5 transition-all shadow-md flex items-start gap-3.5">
+                <div className="w-2.5 h-2.5 rounded-full bg-white mt-1.5 shrink-0 shadow" />
+                <div>
+                  <h4 className="text-sm sm:text-base font-bold text-white leading-snug">
+                    Quem atende empresas do Simples
+                  </h4>
+                  <p className="text-xs sm:text-sm text-slate-300 mt-0.5">
+                    e precisa explicar a transição de forma visual.
+                  </p>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+
+      {/* =========================================================================
+          4. SEÇÃO: VANTAGENS EXCLUSIVAS (6 Cards em Azul Marinho Claro)
+         ========================================================================= */}
+      <section id="beneficios-section" className="py-20 bg-[#081b3a]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           
-          <div className="max-w-3xl mx-auto mb-16 space-y-3">
+          <div className="max-w-3xl mx-auto mb-14 space-y-3">
             <span className="text-xs font-bold text-sky-400 uppercase tracking-widest">
               VANTAGENS EXCLUSIVAS
             </span>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight">
               Da conferência rápida ao parecer executivo
             </h2>
-            <p className="text-slate-300 text-sm sm:text-base">
+            <p className="text-slate-300 text-xs sm:text-sm">
               Uma solução prática para projetar, justificar e valorizar a sua consultoria contábil
             </p>
           </div>
 
           {/* Grid de 6 Blocos Numéricos (01 a 06) */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 text-left">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 text-left">
             
             {/* Card 01 */}
-            <div className="bg-[#0e2750] border border-blue-700/60 rounded-2xl p-7 flex flex-col justify-between transition-all hover:border-blue-500 shadow-xl">
+            <div className="bg-[#0e2750] border border-blue-700/60 rounded-2xl p-6 flex flex-col justify-between transition-all hover:border-blue-500 shadow-xl">
               <div>
-                <div className="w-8 h-8 rounded-lg bg-[#1d63d8] text-white font-extrabold text-xs flex items-center justify-center mb-5 shadow">
+                <div className="w-8 h-8 rounded-lg bg-[#1d63d8] text-white font-extrabold text-xs flex items-center justify-center mb-4 shadow">
                   01
                 </div>
-                <h3 className="text-lg font-bold text-white mb-2">Confronte os regimes</h3>
-                <p className="text-slate-300 text-xs sm:text-sm leading-relaxed">
+                <h3 className="text-base font-bold text-white mb-1.5">Confronte os regimes</h3>
+                <p className="text-slate-300 text-xs leading-relaxed">
                   Analise em paralelo a Guia Única do Simples, a modalidade híbrida e o Lucro Presumido.
                 </p>
               </div>
             </div>
 
             {/* Card 02 */}
-            <div className="bg-[#0e2750] border border-blue-700/60 rounded-2xl p-7 flex flex-col justify-between transition-all hover:border-blue-500 shadow-xl">
+            <div className="bg-[#0e2750] border border-blue-700/60 rounded-2xl p-6 flex flex-col justify-between transition-all hover:border-blue-500 shadow-xl">
               <div>
-                <div className="w-8 h-8 rounded-lg bg-[#1d63d8] text-white font-extrabold text-xs flex items-center justify-center mb-5 shadow">
+                <div className="w-8 h-8 rounded-lg bg-[#1d63d8] text-white font-extrabold text-xs flex items-center justify-center mb-4 shadow">
                   02
                 </div>
-                <h3 className="text-lg font-bold text-white mb-2">Projete a transição inteira</h3>
-                <p className="text-slate-300 text-xs sm:text-sm leading-relaxed">
+                <h3 className="text-base font-bold text-white mb-1.5">Projete a transição inteira</h3>
+                <p className="text-slate-300 text-xs leading-relaxed">
                   Monitore cada fase de 2027 até 2033 com atualização automática das proporções de tributos.
                 </p>
               </div>
             </div>
 
             {/* Card 03 */}
-            <div className="bg-[#0e2750] border border-blue-700/60 rounded-2xl p-7 flex flex-col justify-between transition-all hover:border-blue-500 shadow-xl">
+            <div className="bg-[#0e2750] border border-blue-700/60 rounded-2xl p-6 flex flex-col justify-between transition-all hover:border-blue-500 shadow-xl">
               <div>
-                <div className="w-8 h-8 rounded-lg bg-[#1d63d8] text-white font-extrabold text-xs flex items-center justify-center mb-5 shadow">
+                <div className="w-8 h-8 rounded-lg bg-[#1d63d8] text-white font-extrabold text-xs flex items-center justify-center mb-4 shadow">
                   03
                 </div>
-                <h3 className="text-lg font-bold text-white mb-2">Configure os parâmetros</h3>
-                <p className="text-slate-300 text-xs sm:text-sm leading-relaxed">
+                <h3 className="text-base font-bold text-white mb-1.5">Configure os parâmetros</h3>
+                <p className="text-slate-300 text-xs leading-relaxed">
                   Edite percentuais, composições de custos e alíquotas conforme as peculiaridades do setor.
                 </p>
               </div>
             </div>
 
             {/* Card 04 */}
-            <div className="bg-[#0e2750] border border-blue-700/60 rounded-2xl p-7 flex flex-col justify-between transition-all hover:border-blue-500 shadow-xl">
+            <div className="bg-[#0e2750] border border-blue-700/60 rounded-2xl p-6 flex flex-col justify-between transition-all hover:border-blue-500 shadow-xl">
               <div>
-                <div className="w-8 h-8 rounded-lg bg-[#1d63d8] text-white font-extrabold text-xs flex items-center justify-center mb-5 shadow">
+                <div className="w-8 h-8 rounded-lg bg-[#1d63d8] text-white font-extrabold text-xs flex items-center justify-center mb-4 shadow">
                   04
                 </div>
-                <h3 className="text-lg font-bold text-white mb-2">Demonstre o fluxo financeiro</h3>
-                <p className="text-slate-300 text-xs sm:text-sm leading-relaxed">
+                <h3 className="text-base font-bold text-white mb-1.5">Demonstre o fluxo financeiro</h3>
+                <p className="text-slate-300 text-xs leading-relaxed">
                   Apresente alíquota real, crédito transferível a compradores e oscilação de caixa.
                 </p>
               </div>
             </div>
 
             {/* Card 05 */}
-            <div className="bg-[#0e2750] border border-blue-700/60 rounded-2xl p-7 flex flex-col justify-between transition-all hover:border-blue-500 shadow-xl">
+            <div className="bg-[#0e2750] border border-blue-700/60 rounded-2xl p-6 flex flex-col justify-between transition-all hover:border-blue-500 shadow-xl">
               <div>
-                <div className="w-8 h-8 rounded-lg bg-[#1d63d8] text-white font-extrabold text-xs flex items-center justify-center mb-5 shadow">
+                <div className="w-8 h-8 rounded-lg bg-[#1d63d8] text-white font-extrabold text-xs flex items-center justify-center mb-4 shadow">
                   05
                 </div>
-                <h3 className="text-lg font-bold text-white mb-2">Exporte relatórios formais</h3>
-                <p className="text-slate-300 text-xs sm:text-sm leading-relaxed">
+                <h3 className="text-base font-bold text-white mb-1.5">Exporte relatórios formais</h3>
+                <p className="text-slate-300 text-xs leading-relaxed">
                   Produza documentos em PDF com o logotipo, dados de contato e registro CRC do escritório.
                 </p>
               </div>
             </div>
 
             {/* Card 06 */}
-            <div className="bg-[#0e2750] border border-blue-700/60 rounded-2xl p-7 flex flex-col justify-between transition-all hover:border-blue-500 shadow-xl">
+            <div className="bg-[#0e2750] border border-blue-700/60 rounded-2xl p-6 flex flex-col justify-between transition-all hover:border-blue-500 shadow-xl">
               <div>
-                <div className="w-8 h-8 rounded-lg bg-[#1d63d8] text-white font-extrabold text-xs flex items-center justify-center mb-5 shadow">
+                <div className="w-8 h-8 rounded-lg bg-[#1d63d8] text-white font-extrabold text-xs flex items-center justify-center mb-4 shadow">
                   06
                 </div>
-                <h3 className="text-lg font-bold text-white mb-2">Armazenamento prático</h3>
-                <p className="text-slate-300 text-xs sm:text-sm leading-relaxed">
+                <h3 className="text-base font-bold text-white mb-1.5">Armazenamento prático</h3>
+                <p className="text-slate-300 text-xs leading-relaxed">
                   Conserve o histórico das empresas cadastradas no navegador para consultas futuras.
                 </p>
               </div>
@@ -729,15 +531,15 @@ export const SalesLandingPage: React.FC<SalesLandingPageProps> = ({
 
 
       {/* =========================================================================
-          4. SEÇÃO: RELATÓRIO REAL (Fundo Branco Iluminado)
+          5. SEÇÃO: RELATÓRIO REAL (Fundo Branco Iluminado)
          ========================================================================= */}
-      <section className="py-24 bg-white text-slate-900">
+      <section className="py-20 bg-white text-slate-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
             
             {/* Esquerda: Mockup do Relatório Real Impresso / PDF */}
             <div className="lg:col-span-6">
-              <div className="bg-slate-50 border border-slate-200 rounded-2xl shadow-xl p-5 sm:p-6 text-slate-800 space-y-4">
+              <div className="bg-slate-50 border border-slate-200 rounded-2xl shadow-xl p-5 sm:p-6 text-slate-800 space-y-4 text-left">
                 
                 {/* Header do Relatório */}
                 <div className="flex items-center justify-between pb-3 border-b border-slate-200">
@@ -821,7 +623,7 @@ export const SalesLandingPage: React.FC<SalesLandingPageProps> = ({
             </div>
 
             {/* Direita: Explicação de Valor */}
-            <div className="lg:col-span-6 space-y-6">
+            <div className="lg:col-span-6 space-y-5 text-left">
               <span className="text-xs font-bold text-[#1d63d8] uppercase tracking-widest block">
                 COMUNICAÇÃO DE VALOR
               </span>
@@ -833,12 +635,12 @@ export const SalesLandingPage: React.FC<SalesLandingPageProps> = ({
               </p>
 
               {/* Quote Box */}
-              <div className="bg-slate-50 border border-slate-200 p-5 rounded-xl text-slate-800 text-sm sm:text-base leading-snug">
+              <div className="bg-slate-50 border border-slate-200 p-4 sm:p-5 rounded-xl text-slate-800 text-sm sm:text-base leading-snug">
                 <strong>Quando o posicionamento contábil é fundamentado em dados visuais e cálculos transparentes, a reunião se transforma em uma verdadeira consultoria de negócios</strong>
               </div>
 
               {/* Checklist */}
-              <div className="flex flex-wrap items-center gap-6 text-xs sm:text-sm text-slate-700 font-semibold pt-2">
+              <div className="flex flex-wrap items-center gap-5 text-xs sm:text-sm text-slate-700 font-semibold pt-1">
                 <div className="flex items-center gap-1.5">
                   <Check className="w-4 h-4 text-[#1d63d8]" />
                   <span>Apresentação executiva</span>
@@ -860,19 +662,19 @@ export const SalesLandingPage: React.FC<SalesLandingPageProps> = ({
 
 
       {/* =========================================================================
-          5. SEÇÃO: DEPOIMENTOS E REPERCUSSÃO (Fundo Suave Iluminado)
+          6. SEÇÃO: DEPOIMENTOS E REPERCUSSÃO (Fundo Suave Iluminado)
          ========================================================================= */}
-      <section className="py-24 bg-[#f8fafc] text-slate-900 border-t border-slate-200">
+      <section className="py-20 bg-[#f8fafc] text-slate-900 border-t border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           
-          <div className="max-w-3xl mx-auto mb-16 space-y-3">
+          <div className="max-w-3xl mx-auto mb-14 space-y-3">
             <span className="text-xs font-bold text-[#1d63d8] uppercase tracking-widest">
               OPINIÃO DE QUEM UTILIZA
             </span>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-950 tracking-tight">
               Feedback espontâneo de contadores e consultores
             </h2>
-            <p className="text-slate-600 text-sm sm:text-base">
+            <p className="text-slate-600 text-xs sm:text-sm">
               Relatos reais de profissionais que utilizam o Manual Tributário no dia a dia com seus clientes
             </p>
           </div>
@@ -896,8 +698,7 @@ export const SalesLandingPage: React.FC<SalesLandingPageProps> = ({
               </div>
 
               {/* Chat Body */}
-              <div className="p-4 bg-[#e5ddd5] space-y-3 min-h-[190px] text-xs">
-                {/* Mensagem enviada */}
+              <div className="p-4 bg-[#e5ddd5] space-y-3 min-h-[180px] text-xs">
                 <div className="flex justify-end">
                   <div className="bg-[#dcf8c6] text-slate-800 p-2.5 rounded-lg rounded-tr-none shadow-sm max-w-[85%] text-[11px]">
                     Olá Roberto, como foi a utilização do Manual Tributário nos atendimentos?
@@ -905,7 +706,6 @@ export const SalesLandingPage: React.FC<SalesLandingPageProps> = ({
                   </div>
                 </div>
 
-                {/* Mensagem recebida */}
                 <div className="flex justify-start">
                   <div className="bg-white text-slate-800 p-2.5 rounded-lg rounded-tl-none shadow-sm max-w-[85%] text-[11px]">
                     Boa tarde! Apresentei o diagnóstico para dois clientes do comércio e <strong>a visualização gráfica facilitou demais a explicação</strong>. Excelente material!
@@ -936,15 +736,13 @@ export const SalesLandingPage: React.FC<SalesLandingPageProps> = ({
               </div>
 
               {/* Chat Body */}
-              <div className="p-4 bg-slate-50 space-y-3 min-h-[190px] text-xs">
-                {/* Mensagem recebida */}
+              <div className="p-4 bg-slate-50 space-y-3 min-h-[180px] text-xs">
                 <div className="flex justify-start">
                   <div className="bg-slate-200 text-slate-900 p-3 rounded-2xl rounded-tl-none shadow-sm max-w-[85%] text-[11px]">
                     Parabéns pelo trabalho! As projeções da transição 2027 a 2033 ficaram super completas e <strong>economizam um tempo enorme de consultoria</strong>.
                   </div>
                 </div>
 
-                {/* Mensagem enviada */}
                 <div className="flex justify-end">
                   <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-3 rounded-2xl rounded-tr-none shadow-sm max-w-[85%] text-[11px]">
                     Ficamos muito contentes com o retorno, Camila! Conte conosco sempre que precisar!
@@ -972,7 +770,7 @@ export const SalesLandingPage: React.FC<SalesLandingPageProps> = ({
                 </div>
               </div>
 
-              <div className="p-3.5 bg-white space-y-3 min-h-[190px] text-xs">
+              <div className="p-3.5 bg-white space-y-3 min-h-[180px] text-xs">
                 <p className="text-[11px] text-slate-600 italic">
                   "Como projetar com precisão o impacto da Reforma nos regimes de 2027 a 2033..."
                 </p>
@@ -1015,14 +813,14 @@ export const SalesLandingPage: React.FC<SalesLandingPageProps> = ({
 
 
       {/* =========================================================================
-          6. SEÇÃO: CONDIÇÃO PROMOCIONAL (Azul Marinho Real)
+          7. SEÇÃO: CONDIÇÃO PROMOCIONAL (Azul Marinho Real)
          ========================================================================= */}
-      <section id="oferta-section" className="py-24 bg-[#081b3a] border-t border-blue-800/40">
+      <section id="oferta-section" className="py-20 bg-[#081b3a] border-t border-blue-800/40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
             
             {/* Esquerda: Explicação da Oferta */}
-            <div className="lg:col-span-6 space-y-6 text-left">
+            <div className="lg:col-span-6 space-y-5 text-left">
               <span className="text-xs font-bold text-sky-400 uppercase tracking-widest block">
                 CONDIÇÃO ESPECIAL DE ADESÃO
               </span>
@@ -1049,9 +847,9 @@ export const SalesLandingPage: React.FC<SalesLandingPageProps> = ({
 
             {/* Direita: O Card de Preço R$ 47 + Checklist */}
             <div className="lg:col-span-6">
-              <div className="bg-[#0e2750] border-2 border-blue-500 rounded-3xl p-8 sm:p-10 shadow-2xl shadow-black/80 relative text-left">
+              <div className="bg-[#0e2750] border-2 border-blue-500 rounded-3xl p-7 sm:p-9 shadow-2xl shadow-black/80 relative text-left">
                 
-                <div className="space-y-4 mb-6">
+                <div className="space-y-3 mb-5">
                   <span className="text-[11px] font-bold text-sky-300 uppercase tracking-wider block">
                     LICENÇA PROFISSIONAL PARA CONTADORES
                   </span>
@@ -1061,7 +859,7 @@ export const SalesLandingPage: React.FC<SalesLandingPageProps> = ({
                 </div>
 
                 {/* Lista de Recursos com Checks */}
-                <div className="space-y-3 mb-8 text-xs sm:text-sm text-slate-200">
+                <div className="space-y-2.5 mb-7 text-xs sm:text-sm text-slate-200">
                   <div className="flex items-center gap-2.5">
                     <Check className="w-4 h-4 text-sky-400 shrink-0" />
                     <span>Confronto completo dos 3 enquadramentos</span>
@@ -1085,7 +883,7 @@ export const SalesLandingPage: React.FC<SalesLandingPageProps> = ({
                 </div>
 
                 {/* Preço de R$ 47 */}
-                <div className="pt-4 pb-6 border-t border-blue-800/60 text-center">
+                <div className="pt-3 pb-5 border-t border-blue-800/60 text-center">
                   <span className="text-[11px] font-bold text-slate-300 uppercase tracking-wider block mb-1">
                     VALOR PROMOCIONAL ÚNICO:
                   </span>
@@ -1105,7 +903,7 @@ export const SalesLandingPage: React.FC<SalesLandingPageProps> = ({
                 <button
                   id="pricing-card-btn"
                   onClick={() => onOpenCheckout("47")}
-                  className="w-full bg-[#1d63d8] hover:bg-[#2563eb] text-white font-extrabold text-base py-4 rounded-xl shadow-xl shadow-blue-950/80 hover:shadow-blue-600/40 transition-all flex items-center justify-center gap-2 cursor-pointer uppercase tracking-wide group"
+                  className="w-full bg-[#1d63d8] hover:bg-[#2563eb] text-white font-extrabold text-sm sm:text-base py-4 rounded-xl shadow-xl shadow-blue-950/80 hover:shadow-blue-600/40 transition-all flex items-center justify-center gap-2 cursor-pointer uppercase tracking-wide group"
                 >
                   <span>Garantir o Manual Tributário por R$ 47</span>
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -1116,7 +914,7 @@ export const SalesLandingPage: React.FC<SalesLandingPageProps> = ({
                   <CtaChecklist darkTheme={true} />
                 </div>
 
-                <div className="text-center text-[10px] text-slate-400 mt-4">
+                <div className="text-center text-[10px] text-slate-400 mt-3">
                   Transação segura • Envio digital • Acesso ilimitado
                 </div>
 
@@ -1129,11 +927,11 @@ export const SalesLandingPage: React.FC<SalesLandingPageProps> = ({
 
 
       {/* =========================================================================
-          7. SEÇÃO: DÚVIDAS FREQUENTES (Fundo Branco Iluminado)
+          8. SEÇÃO: DÚVIDAS FREQUENTES (Fundo Branco Iluminado)
          ========================================================================= */}
-      <section id="duvidas-section" className="py-24 bg-white text-slate-900 border-t border-slate-200">
+      <section id="duvidas-section" className="py-20 bg-white text-slate-900 border-t border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
             
             {/* Esquerda: Título */}
             <div className="lg:col-span-5 space-y-3 text-left">
@@ -1149,13 +947,13 @@ export const SalesLandingPage: React.FC<SalesLandingPageProps> = ({
             </div>
 
             {/* Direita: Acordeão de Dúvidas */}
-            <div className="lg:col-span-7 space-y-4 text-left">
+            <div className="lg:col-span-7 space-y-3.5 text-left">
               {faqs.map((faq, idx) => {
                 const isOpen = openFaq === idx;
                 return (
                   <div 
                     key={idx} 
-                    className="border-b border-slate-200 pb-4 transition-all"
+                    className="border-b border-slate-200 pb-3.5 transition-all"
                   >
                     <button
                       onClick={() => toggleFaq(idx)}
@@ -1168,7 +966,7 @@ export const SalesLandingPage: React.FC<SalesLandingPageProps> = ({
                     </button>
 
                     {isOpen && (
-                      <div className="mt-2 text-xs sm:text-sm text-slate-600 leading-relaxed pr-6">
+                      <div className="mt-1.5 text-xs sm:text-sm text-slate-600 leading-relaxed pr-6">
                         {faq.a}
                       </div>
                     )}
@@ -1183,23 +981,23 @@ export const SalesLandingPage: React.FC<SalesLandingPageProps> = ({
 
 
       {/* =========================================================================
-          8. BANNER AZUL ROYAL DE FECHAMENTO
+          9. BANNER AZUL ROYAL DE FECHAMENTO
          ========================================================================= */}
-      <section className="py-20 bg-[#124cb4] text-white text-center">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+      <section className="py-16 bg-[#124cb4] text-white text-center">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-5">
           
           <span className="text-xs font-extrabold text-sky-200 uppercase tracking-widest block">
             PREPARE SEU ESCRITÓRIO PARA A TRANSIÇÃO TRIBUTÁRIA
           </span>
 
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight">
             Tenha diagnósticos precisos e antecipe as demandas dos seus clientes
           </h2>
 
-          <div className="pt-2 flex flex-col items-center">
+          <div className="pt-1 flex flex-col items-center">
             <button
               onClick={() => onOpenCheckout("47")}
-              className="bg-white hover:bg-slate-100 text-[#124cb4] font-extrabold text-sm sm:text-base px-8 py-4 rounded-xl shadow-xl transition-all inline-flex items-center gap-3 cursor-pointer group"
+              className="bg-white hover:bg-slate-100 text-[#124cb4] font-extrabold text-xs sm:text-sm px-8 py-3.5 rounded-xl shadow-xl transition-all inline-flex items-center gap-2.5 cursor-pointer group"
             >
               <span className="uppercase tracking-wide">Acessar o Manual Tributário por R$ 47</span>
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -1211,7 +1009,7 @@ export const SalesLandingPage: React.FC<SalesLandingPageProps> = ({
             </div>
           </div>
 
-          <p className="text-xs text-sky-200 font-medium">
+          <p className="text-[11px] text-sky-200 font-medium">
             Simulações seguras • Comparativos transparentes • Relatórios profissionais
           </p>
 
@@ -1220,10 +1018,10 @@ export const SalesLandingPage: React.FC<SalesLandingPageProps> = ({
 
 
       {/* =========================================================================
-          9. FOOTER
+          10. FOOTER
          ========================================================================= */}
-      <footer className="py-10 bg-white border-t border-slate-200 text-xs text-slate-500">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
+      <footer className="py-8 bg-white border-t border-slate-200 text-xs text-slate-500">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-5">
           
           {/* Logo e Aviso */}
           <div className="flex items-center gap-4 text-left">
