@@ -1,0 +1,1255 @@
+import React, { useState } from "react";
+import { 
+  Calculator, 
+  ArrowRight, 
+  Check, 
+  Sparkles,
+  FileText,
+  Lock,
+  MessageCircle,
+  Instagram,
+  Facebook,
+  ShieldCheck,
+  ChevronRight,
+  HelpCircle,
+  ChevronDown
+} from "lucide-react";
+
+interface SalesLandingPageProps {
+  onOpenSimulator?: () => void;
+  onOpenCheckout: (planId?: string) => void;
+  onOpenAiAdvisor?: () => void;
+}
+
+export const SalesLandingPage: React.FC<SalesLandingPageProps> = ({
+  onOpenCheckout,
+}) => {
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
+
+  const toggleFaq = (index: number) => {
+    setOpenFaq(openFaq === index ? null : index);
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  // Componente de Checklist padrão abaixo dos CTAs
+  const CtaChecklist = ({ darkTheme = true }: { darkTheme?: boolean }) => (
+    <div className={`flex flex-wrap items-center justify-center sm:justify-start gap-4 sm:gap-6 text-xs pt-3 ${
+      darkTheme ? "text-slate-300" : "text-slate-700 font-medium"
+    }`}>
+      <div className="flex items-center gap-1.5 font-medium">
+        <span className={darkTheme ? "text-sky-400 font-bold" : "text-blue-600 font-bold"}>✓</span>
+        <span>Acesso imediato</span>
+      </div>
+      <div className="flex items-center gap-1.5 font-medium">
+        <span className={darkTheme ? "text-sky-400 font-bold" : "text-blue-600 font-bold"}>✓</span>
+        <span>Funciona offline</span>
+      </div>
+      <div className="flex items-center gap-1.5 font-medium">
+        <span className={darkTheme ? "text-sky-400 font-bold" : "text-blue-600 font-bold"}>✓</span>
+        <span>Dados no navegador</span>
+      </div>
+    </div>
+  );
+
+  const faqs = [
+    {
+      q: "Preciso baixar ou instalar algum aplicativo?",
+      a: "Não. O Manual Tributário funciona 100% no seu navegador moderno (Chrome, Edge, Safari, Firefox), sem requerer instalações complexas. Ele opera até mesmo offline após carregado."
+    },
+    {
+      q: "O sigilo e as informações dos meus clientes estão protegidos?",
+      a: "Totalmente. O processamento dos dados e os cenários salvos permanecem armazenados localmente no seu próprio navegador, sem compartilhamento indevido em servidores externos."
+    },
+    {
+      q: "A ferramenta atende empresas de serviços e comércio?",
+      a: "Sim. O sistema foi desenvolvido para contemplar comércio, serviços e indústrias, cobrindo os Anexos I ao V do Simples Nacional, regra de Fator R e ajustes finos de alíquotas."
+    },
+    {
+      q: "Posso incluir o logotipo e os dados do meu escritório contábil?",
+      a: "Com certeza. Você pode preencher o nome da sua empresa contábil, registro CRC, telefone e notas personalizadas no cabeçalho dos diagnósticos e relatórios exportados."
+    },
+    {
+      q: "O cálculo substitui a validação técnica do contador?",
+      a: "Não. Tratase de um instrumento avançado de apoio para simulações e projeções. O profissional responsável é quem chancela as particularidades jurídicas e fiscais de cada operação."
+    },
+    {
+      q: "Como e quando recebo o acesso?",
+      a: "A liberação é instantânea. Imediatamente após a confirmação do pagamento, você recebe o link direto e o manual de utilização no seu email e no WhatsApp cadastrado."
+    }
+  ];
+
+  return (
+    <div className="w-full bg-[#081b3a] text-slate-100 font-sans antialiased selection:bg-blue-600 selection:text-white">
+      
+      {/* =========================================================================
+          1. HERO SECTION (Paleta Azul Marinho Real com Mockup Fiel da Imagem)
+         ========================================================================= */}
+      <section className="relative pt-10 pb-20 md:pt-14 md:pb-24 overflow-hidden border-b border-blue-800/40">
+        {/* Glows de iluminação em tons de azul royal e ciano */}
+        <div className="absolute top-0 left-1/4 w-[600px] h-[450px] bg-blue-600/20 blur-[150px] rounded-full pointer-events-none" />
+        <div className="absolute top-1/3 right-0 w-[550px] h-[450px] bg-sky-500/15 blur-[150px] rounded-full pointer-events-none" />
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+            
+            {/* Coluna Esquerda: Textos & CTA */}
+            <div className="lg:col-span-5 space-y-6 text-left">
+              {/* Badge de Edição */}
+              <div className="inline-flex items-center gap-2 bg-[#0d2752] border border-blue-600/60 text-slate-200 text-xs font-semibold px-3 py-1.5 rounded-full shadow-md">
+                <span>🔥</span>
+                <span className="tracking-wider uppercase text-[11px] font-bold text-sky-200">
+                  Manual Tributário • Edição Especial para Contadores
+                </span>
+              </div>
+
+              {/* Título Principal SEM PONTO FINAL */}
+              <h1 className="text-4xl sm:text-5xl lg:text-[50px] font-black text-white tracking-tight leading-[1.12]">
+                Qual enquadramento <br />
+                traz mais <br />
+                economia? <br />
+                <span className="text-sky-400">Descubra com</span> <br />
+                <span className="text-sky-400">precisão em</span> <br />
+                <span className="text-sky-400">poucos minutos</span>
+              </h1>
+
+              {/* Subtítulo */}
+              <p className="text-slate-200 text-sm sm:text-base leading-relaxed font-normal max-w-lg">
+                Avalie o Simples Nacional padrão, o formato híbrido (IBS e CBS destacados) e o Lucro Presumido no período de 2027 a 2033. Gere pareceres consultivos com a identidade visual do seu escritório.
+              </p>
+
+              {/* Botão CTA Principal + Checklist */}
+              <div className="pt-2">
+                <button
+                  id="hero-btn-comprar"
+                  onClick={() => onOpenCheckout("47")}
+                  className="w-full sm:w-auto bg-[#1d63d8] hover:bg-[#2563eb] text-white font-bold text-base px-8 py-4 rounded-xl shadow-xl shadow-blue-950/80 hover:shadow-blue-600/50 transition-all flex items-center justify-center gap-3 cursor-pointer group"
+                >
+                  <span className="uppercase tracking-wide text-sm font-extrabold">Adquirir o Manual Tributário por R$ 47</span>
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </button>
+
+                {/* Checklist Exato embaixo do CTA */}
+                <CtaChecklist darkTheme={true} />
+              </div>
+            </div>
+
+            {/* Coluna Direita: FOTO/MOCKUP REAL DO SIMULADOR (Idêntico ao image.png anexado) */}
+            <div id="simulador-preview-section" className="lg:col-span-7">
+              <div className="bg-[#0b162c] border border-blue-700/60 rounded-2xl shadow-2xl shadow-black/80 overflow-hidden relative">
+                
+                {/* Header do Mockup do Navegador */}
+                <div className="bg-[#081224] px-4 py-3 border-b border-blue-900/60 flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <div className="w-3 h-3 rounded-full bg-sky-500/80" />
+                    <div className="w-3 h-3 rounded-full bg-sky-400/60" />
+                    <div className="w-3 h-3 rounded-full bg-blue-400/40" />
+                  </div>
+                  <div className="text-right">
+                    <span className="text-[12px] font-extrabold text-white uppercase tracking-wider font-mono">
+                      TELA REAL DO SIMULADOR
+                    </span>
+                  </div>
+                </div>
+
+                {/* CORPO INTERNO BRANCO / OFF-WHITE (Exatamente como no screenshot fornecido) */}
+                <div className="bg-white text-slate-800 p-4 sm:p-5 space-y-4 text-xs font-sans">
+                  
+                  {/* Top Notice de Premissas com Selo Azul "IMAGEM REAL" */}
+                  <div className="flex items-center justify-between gap-3 p-3 rounded-xl bg-slate-50 border border-slate-200">
+                    <div className="text-left space-y-0.5">
+                      <div className="flex items-center gap-1.5 text-xs font-bold text-blue-800">
+                        <span className="text-blue-600 text-[10px]">▶</span>
+                        <span>Premissas avançadas: ajuste as alíquotas aqui</span>
+                      </div>
+                      <p className="text-[10.5px] text-slate-500 leading-tight">
+                        Alíquotas do IBS e CBS, crédito, composição do DAS e dados do Lucro Presumido. São estimativas, ajuste por cliente e confirme a base legal.
+                      </p>
+                    </div>
+                    <span className="bg-[#1d63d8] text-white text-[11px] font-extrabold uppercase px-3 py-1.5 rounded-lg shadow-md shrink-0 tracking-wider">
+                      IMAGEM REAL
+                    </span>
+                  </div>
+
+                  {/* Título de Resultados da Simulação */}
+                  <div className="border-b border-slate-200 pb-2 text-left">
+                    <div className="text-[11px] font-bold text-slate-900 uppercase tracking-wide">
+                      2. RESULTADO POR MÊS • ANO DE 2027
+                    </div>
+                    <div className="flex items-center gap-1.5 text-[11px] text-slate-600 mt-0.5">
+                      <span className="inline-block w-2.5 h-2.5 rounded-sm bg-blue-600 shrink-0" />
+                      <span><strong>Comparativo de carga total</strong> Guia única (tradicional) x Pagar por fora (híbrido) x Lucro Presumido - valores por mês</span>
+                    </div>
+                  </div>
+
+                  {/* 3 Colunas dos Cenários de 2027 */}
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-left">
+                    
+                    {/* Coluna 1: Guia Única (Simples Tradicional) */}
+                    <div className="bg-slate-50 border border-slate-200 rounded-xl overflow-hidden shadow-sm flex flex-col justify-between">
+                      <div>
+                        {/* Topo Escuro */}
+                        <div className="bg-[#111827] text-white p-3 space-y-1.5">
+                          <div className="flex items-center justify-between">
+                            <span className="text-[9.5px] font-bold text-slate-200 uppercase tracking-wider">
+                              GUIA ÚNICA • SIMPLES TRADICIONAL
+                            </span>
+                          </div>
+                          <span className="inline-block bg-[#059669] text-white text-[8.5px] font-extrabold px-1.5 py-0.5 rounded uppercase">
+                            MAIS BARATO
+                          </span>
+                          <div className="text-2xl font-black text-white font-mono tracking-tight">
+                            R$ 10.443
+                          </div>
+                          <div className="text-[9.5px] text-slate-300">
+                            Sai do bolso por mês • receita R$ 100.000
+                          </div>
+
+                          {/* Tags azuis */}
+                          <div className="flex flex-wrap gap-1 pt-1">
+                            <span className="bg-blue-900/80 text-sky-200 text-[8px] font-semibold px-1.5 py-0.5 rounded">
+                              Alíq. efetiva 10,4%
+                            </span>
+                            <span className="bg-blue-900/80 text-sky-200 text-[8px] font-semibold px-1.5 py-0.5 rounded">
+                              Faixa 4ª
+                            </span>
+                            <span className="bg-blue-900/80 text-sky-200 text-[8px] font-semibold px-1.5 py-0.5 rounded">
+                              RBT12 R$ 1.000.000
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* Breakdown lines */}
+                        <div className="p-3 space-y-1 text-[10px] text-slate-700">
+                          <div className="flex items-center justify-between">
+                            <span className="w-14">IBS/CBS</span>
+                            <div className="flex-1 mx-2 h-1.5 bg-slate-200 rounded-full overflow-hidden">
+                              <div className="w-[30%] h-full bg-blue-600 rounded-full" />
+                            </div>
+                            <span className="font-mono font-semibold text-slate-900">R$ 1.625</span>
+                          </div>
+                          <div className="flex items-center justify-between">
+                            <span className="w-14">IRPJ</span>
+                            <div className="flex-1 mx-2 h-1.5 bg-slate-200 rounded-full overflow-hidden">
+                              <div className="w-[10%] h-full bg-blue-600 rounded-full" />
+                            </div>
+                            <span className="font-mono font-semibold text-slate-900">R$ 401</span>
+                          </div>
+                          <div className="flex items-center justify-between">
+                            <span className="w-14">CSLL</span>
+                            <div className="flex-1 mx-2 h-1.5 bg-slate-200 rounded-full overflow-hidden">
+                              <div className="w-[8%] h-full bg-blue-600 rounded-full" />
+                            </div>
+                            <span className="font-mono font-semibold text-slate-900">R$ 366</span>
+                          </div>
+                          <div className="flex items-center justify-between">
+                            <span className="w-14">IPI</span>
+                            <div className="flex-1 mx-2 text-center text-slate-300">—</div>
+                            <span className="font-mono text-slate-400">—</span>
+                          </div>
+                          <div className="flex items-center justify-between">
+                            <span className="w-14">CPP/INSS</span>
+                            <div className="flex-1 mx-2 h-1.5 bg-slate-200 rounded-full overflow-hidden">
+                              <div className="w-[50%] h-full bg-blue-600 rounded-full" />
+                            </div>
+                            <span className="font-mono font-semibold text-slate-900">R$ 4.452</span>
+                          </div>
+                          <div className="flex items-center justify-between">
+                            <span className="w-14">ICMS</span>
+                            <div className="flex-1 mx-2 h-1.5 bg-slate-200 rounded-full overflow-hidden">
+                              <div className="w-[20%] h-full bg-blue-600 rounded-full" />
+                            </div>
+                            <span className="font-mono font-semibold text-slate-900">R$ 1.437</span>
+                          </div>
+                          <div className="flex items-center justify-between">
+                            <span className="w-14">ISS</span>
+                            <div className="flex-1 mx-2 h-1.5 bg-slate-200 rounded-full overflow-hidden">
+                              <div className="w-[30%] h-full bg-blue-600 rounded-full" />
+                            </div>
+                            <span className="font-mono font-semibold text-slate-900">R$ 2.083</span>
+                          </div>
+                          <div className="flex items-center justify-between">
+                            <span className="w-14">Custo extra</span>
+                            <div className="flex-1 mx-2 text-center text-slate-300">—</div>
+                            <span className="font-mono text-slate-400">—</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Rodapé do Card */}
+                      <div className="p-3 bg-white border-t border-slate-200 space-y-1 text-[10px]">
+                        <div className="flex justify-between items-center">
+                          <span className="text-slate-600 font-semibold">Total por mês</span>
+                          <span className="font-black text-[#059669] font-mono text-xs">R$ 10.443</span>
+                        </div>
+                        <div className="flex justify-between items-center text-slate-500">
+                          <span>Crédito ao cliente PJ</span>
+                          <span className="font-mono font-semibold text-slate-700">R$ 975</span>
+                        </div>
+                        <div className="pt-1 text-[9px] text-blue-600 font-bold hover:underline cursor-pointer">
+                          • Ver o cálculo
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Coluna 2: Pagar por Fora (Híbrido) */}
+                    <div className="bg-slate-50 border border-slate-200 rounded-xl overflow-hidden shadow-sm flex flex-col justify-between">
+                      <div>
+                        {/* Topo Azul Royal */}
+                        <div className="bg-[#3444c5] text-white p-3 space-y-1.5">
+                          <div className="flex items-center justify-between">
+                            <span className="text-[9.5px] font-bold text-slate-200 uppercase tracking-wider">
+                              PAGAR POR FORA • REGIME HÍBRIDO
+                            </span>
+                          </div>
+                          <div className="h-4" />
+                          <div className="text-2xl font-black text-white font-mono tracking-tight">
+                            R$ 15.348
+                          </div>
+                          <div className="text-[9.5px] text-slate-200">
+                            Sai do bolso por mês • receita R$ 100.000
+                          </div>
+
+                          {/* Tags pílulas */}
+                          <div className="flex flex-wrap gap-1 pt-1">
+                            <span className="bg-blue-900/80 text-sky-200 text-[8px] font-semibold px-1.5 py-0.5 rounded">
+                              Alíq. total 15%
+                            </span>
+                            <span className="bg-blue-900/80 text-sky-200 text-[8px] font-semibold px-1.5 py-0.5 rounded">
+                              IBS + CBS R$ 6.230
+                            </span>
+                            <span className="bg-blue-900/80 text-sky-200 text-[8px] font-semibold px-1.5 py-0.5 rounded">
+                              DAS R$ 8.818
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* Breakdown lines */}
+                        <div className="p-3 space-y-1 text-[10px] text-slate-700">
+                          <div className="flex items-center justify-between">
+                            <span className="w-14">IBS/CBS</span>
+                            <div className="flex-1 mx-2 h-1.5 bg-slate-200 rounded-full overflow-hidden">
+                              <div className="w-[75%] h-full bg-blue-600 rounded-full" />
+                            </div>
+                            <span className="font-mono font-semibold text-slate-900">R$ 6.230</span>
+                          </div>
+                          <div className="flex items-center justify-between">
+                            <span className="w-14">IRPJ</span>
+                            <div className="flex-1 mx-2 h-1.5 bg-slate-200 rounded-full overflow-hidden">
+                              <div className="w-[10%] h-full bg-blue-600 rounded-full" />
+                            </div>
+                            <span className="font-mono font-semibold text-slate-900">R$ 401</span>
+                          </div>
+                          <div className="flex items-center justify-between">
+                            <span className="w-14">CSLL</span>
+                            <div className="flex-1 mx-2 h-1.5 bg-slate-200 rounded-full overflow-hidden">
+                              <div className="w-[8%] h-full bg-blue-600 rounded-full" />
+                            </div>
+                            <span className="font-mono font-semibold text-slate-900">R$ 366</span>
+                          </div>
+                          <div className="flex items-center justify-between">
+                            <span className="w-14">IPI</span>
+                            <div className="flex-1 mx-2 text-center text-slate-300">—</div>
+                            <span className="font-mono text-slate-400">—</span>
+                          </div>
+                          <div className="flex items-center justify-between">
+                            <span className="w-14">CPP/INSS</span>
+                            <div className="flex-1 mx-2 h-1.5 bg-slate-200 rounded-full overflow-hidden">
+                              <div className="w-[50%] h-full bg-blue-600 rounded-full" />
+                            </div>
+                            <span className="font-mono font-semibold text-slate-900">R$ 4.452</span>
+                          </div>
+                          <div className="flex items-center justify-between">
+                            <span className="w-14">ICMS</span>
+                            <div className="flex-1 mx-2 h-1.5 bg-slate-200 rounded-full overflow-hidden">
+                              <div className="w-[20%] h-full bg-blue-600 rounded-full" />
+                            </div>
+                            <span className="font-mono font-semibold text-slate-900">R$ 1.437</span>
+                          </div>
+                          <div className="flex items-center justify-between">
+                            <span className="w-14">ISS</span>
+                            <div className="flex-1 mx-2 h-1.5 bg-slate-200 rounded-full overflow-hidden">
+                              <div className="w-[30%] h-full bg-blue-600 rounded-full" />
+                            </div>
+                            <span className="font-mono font-semibold text-slate-900">R$ 2.083</span>
+                          </div>
+                          <div className="flex items-center justify-between">
+                            <span className="w-14">Custo extra</span>
+                            <div className="flex-1 mx-2 h-1.5 bg-slate-200 rounded-full overflow-hidden">
+                              <div className="w-[8%] h-full bg-blue-600 rounded-full" />
+                            </div>
+                            <span className="font-mono font-semibold text-slate-900">R$ 300</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Rodapé do Card */}
+                      <div className="p-3 bg-white border-t border-slate-200 space-y-1 text-[10px]">
+                        <div className="flex justify-between items-center">
+                          <span className="text-slate-600 font-semibold">Total por mês</span>
+                          <span className="font-black text-slate-900 font-mono text-xs">R$ 15.348</span>
+                        </div>
+                        <div className="flex justify-between items-center text-slate-500">
+                          <span>Crédito ao cliente PJ</span>
+                          <span className="font-mono font-bold text-[#059669]">R$ 5.340</span>
+                        </div>
+                        <div className="pt-1 text-[9px] text-blue-600 font-bold hover:underline cursor-pointer">
+                          • Ver o cálculo
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Coluna 3: Lucro Presumido */}
+                    <div className="bg-slate-50 border border-slate-200 rounded-xl overflow-hidden shadow-sm flex flex-col justify-between">
+                      <div>
+                        {/* Topo Verde Floresta */}
+                        <div className="bg-[#065f46] text-white p-3 space-y-1.5">
+                          <div className="flex items-center justify-between">
+                            <span className="text-[9.5px] font-bold text-slate-200 uppercase tracking-wider">
+                              LUCRO PRESUMIDO
+                            </span>
+                          </div>
+                          <div className="h-4" />
+                          <div className="text-2xl font-black text-white font-mono tracking-tight">
+                            R$ 21.810
+                          </div>
+                          <div className="text-[9.5px] text-slate-200">
+                            Sai do bolso por mês • receita R$ 100.000
+                          </div>
+
+                          {/* Tags pílulas */}
+                          <div className="flex flex-wrap gap-1 pt-1">
+                            <span className="bg-emerald-900/80 text-emerald-200 text-[8px] font-semibold px-1.5 py-0.5 rounded">
+                              Alíq. total 21,8%
+                            </span>
+                            <span className="bg-emerald-900/80 text-emerald-200 text-[8px] font-semibold px-1.5 py-0.5 rounded">
+                              IRPJ + CSLL R$ 4.980
+                            </span>
+                            <span className="bg-emerald-900/80 text-emerald-200 text-[8px] font-semibold px-1.5 py-0.5 rounded">
+                              INSS R$ 4.200
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* Breakdown lines */}
+                        <div className="p-3 space-y-1 text-[10px] text-slate-700">
+                          <div className="flex items-center justify-between">
+                            <span className="w-14">IBS/CBS</span>
+                            <div className="flex-1 mx-2 h-1.5 bg-slate-200 rounded-full overflow-hidden">
+                              <div className="w-[75%] h-full bg-blue-600 rounded-full" />
+                            </div>
+                            <span className="font-mono font-semibold text-slate-900">R$ 6.230</span>
+                          </div>
+                          <div className="flex items-center justify-between">
+                            <span className="w-14">IRPJ</span>
+                            <div className="flex-1 mx-2 h-1.5 bg-slate-200 rounded-full overflow-hidden">
+                              <div className="w-[40%] h-full bg-blue-600 rounded-full" />
+                            </div>
+                            <span className="font-mono font-semibold text-slate-900">R$ 3.000</span>
+                          </div>
+                          <div className="flex items-center justify-between">
+                            <span className="w-14">CSLL</span>
+                            <div className="flex-1 mx-2 h-1.5 bg-slate-200 rounded-full overflow-hidden">
+                              <div className="w-[28%] h-full bg-blue-600 rounded-full" />
+                            </div>
+                            <span className="font-mono font-semibold text-slate-900">R$ 1.980</span>
+                          </div>
+                          <div className="flex items-center justify-between">
+                            <span className="w-14">IPI</span>
+                            <div className="flex-1 mx-2 text-center text-slate-300">—</div>
+                            <span className="font-mono text-slate-400">—</span>
+                          </div>
+                          <div className="flex items-center justify-between">
+                            <span className="w-14">CPP/INSS</span>
+                            <div className="flex-1 mx-2 h-1.5 bg-slate-200 rounded-full overflow-hidden">
+                              <div className="w-[50%] h-full bg-blue-600 rounded-full" />
+                            </div>
+                            <span className="font-mono font-semibold text-slate-900">R$ 4.200</span>
+                          </div>
+                          <div className="flex items-center justify-between">
+                            <span className="w-14">ICMS</span>
+                            <div className="flex-1 mx-2 h-1.5 bg-slate-200 rounded-full overflow-hidden">
+                              <div className="w-[45%] h-full bg-blue-600 rounded-full" />
+                            </div>
+                            <span className="font-mono font-semibold text-slate-900">R$ 3.600</span>
+                          </div>
+                          <div className="flex items-center justify-between">
+                            <span className="w-14">ISS</span>
+                            <div className="flex-1 mx-2 h-1.5 bg-slate-200 rounded-full overflow-hidden">
+                              <div className="w-[35%] h-full bg-blue-600 rounded-full" />
+                            </div>
+                            <span className="font-mono font-semibold text-slate-900">R$ 2.500</span>
+                          </div>
+                          <div className="flex items-center justify-between">
+                            <span className="w-14">Custo extra</span>
+                            <div className="flex-1 mx-2 h-1.5 bg-slate-200 rounded-full overflow-hidden">
+                              <div className="w-[8%] h-full bg-blue-600 rounded-full" />
+                            </div>
+                            <span className="font-mono font-semibold text-slate-900">R$ 300</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Rodapé do Card */}
+                      <div className="p-3 bg-white border-t border-slate-200 space-y-1 text-[10px]">
+                        <div className="flex justify-between items-center">
+                          <span className="text-slate-600 font-semibold">Total por mês</span>
+                          <span className="font-black text-slate-900 font-mono text-xs">R$ 21.810</span>
+                        </div>
+                        <div className="flex justify-between items-center text-slate-500">
+                          <span>Crédito ao cliente PJ</span>
+                          <span className="font-mono font-bold text-[#059669]">R$ 12.240</span>
+                        </div>
+                        <div className="pt-1 text-[9px] text-blue-600 font-bold hover:underline cursor-pointer">
+                          • Ver o cálculo
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+
+                  {/* 2 Boxes de Diferença de Custo e Crédito Extra */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1 text-left">
+                    <div className="p-3 rounded-xl bg-slate-50 border border-slate-200">
+                      <div className="text-[11px] font-bold text-slate-800">Diferença de custo (por fora x guia única)</div>
+                      <div className="text-lg font-black text-[#1d63d8] font-mono mt-0.5">R$ 4.905</div>
+                      <div className="text-[10px] text-slate-500 mt-0.5">
+                        Quanto pagar por fora custa a mais (ou a menos) que a guia única, por mês.
+                      </div>
+                    </div>
+
+                    <div className="p-3 rounded-xl bg-slate-50 border border-slate-200">
+                      <div className="text-[11px] font-bold text-slate-800">Crédito extra para os clientes</div>
+                      <div className="text-lg font-black text-[#1d63d8] font-mono mt-0.5">R$ 4.365</div>
+                      <div className="text-[10px] text-slate-500 mt-0.5">
+                        Quanto de crédito a mais o cliente passa a ter pagando por fora. Ajuda a vender mais para empresas.
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Caixa Amarela/Creme de Recomendação Orientativa */}
+                  <div className="p-3.5 rounded-xl bg-[#fef9c3]/90 border border-amber-300 text-[10.5px] text-amber-950 leading-relaxed text-left space-y-1">
+                    <div className="font-extrabold text-amber-900 tracking-wider text-[10px] uppercase">
+                      RECOMENDAÇÃO ORIENTATIVA
+                    </div>
+                    <p>
+                      <strong>Caso intermediário:</strong> em 2027, o custo extra de pagar por fora (R$ 4.905) ainda pesa mais que o ganho de crédito (R$ 4.365). Reavalie ano a ano mudando o ano no seletor acima, porque o crédito da guia única cresce ao longo da transição.
+                    </p>
+                    <p>
+                      <strong>Lucro Presumido:</strong> neste ano apareceu mais caro (R$ 21.810), então provavelmente não compensa sair do Simples Nacional.
+                    </p>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          {/* 4 Cards de Métricas Inferiores */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-16">
+            <div className="bg-[#0e2750]/80 border border-blue-700/50 rounded-xl p-5 text-left shadow-lg">
+              <div className="text-3xl sm:text-4xl font-extrabold text-white font-mono">3</div>
+              <div className="text-xs font-bold text-slate-200 uppercase tracking-wider mt-1">Modelos tributários avaliados</div>
+            </div>
+
+            <div className="bg-[#0e2750]/80 border border-blue-700/50 rounded-xl p-5 text-left shadow-lg">
+              <div className="text-3xl sm:text-4xl font-extrabold text-white font-mono">7</div>
+              <div className="text-xs font-bold text-slate-200 uppercase tracking-wider mt-1">Exercícios projetados</div>
+            </div>
+
+            <div className="bg-[#0e2750]/80 border border-blue-700/50 rounded-xl p-5 text-left shadow-lg">
+              <div className="text-3xl sm:text-4xl font-extrabold text-white font-mono">1</div>
+              <div className="text-xs font-bold text-slate-200 uppercase tracking-wider mt-1">Parecer pronto para entrega</div>
+            </div>
+
+            <div className="bg-[#0e2750]/80 border border-blue-700/50 rounded-xl p-5 text-left shadow-lg">
+              <div className="text-3xl sm:text-4xl font-extrabold text-white font-mono">100%</div>
+              <div className="text-xs font-bold text-slate-200 uppercase tracking-wider mt-1">Adaptável ao seu escritório</div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+
+      {/* =========================================================================
+          2. SEÇÃO: O NOVO CENÁRIO (Fundo Branco Iluminado)
+         ========================================================================= */}
+      <section className="py-20 bg-white text-slate-900">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            
+            <div className="lg:col-span-6 space-y-3">
+              <span className="text-xs font-bold text-[#1d63d8] uppercase tracking-widest block">
+                O DESAFIO CONSULTIVO
+              </span>
+              <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-extrabold text-slate-950 tracking-tight leading-[1.15]">
+                Seu cliente busca respostas práticas sobre impacto financeiro
+              </h2>
+            </div>
+
+            <div className="lg:col-span-6 space-y-6">
+              <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
+                Empresários não querem jargões legislativos complexos. Eles precisam enxergar claramente o impacto no fluxo de caixa, as vantagens de cada regime e a competitividade comercial.
+              </p>
+              <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
+                Entregar essa clareza exige confrontar alíquotas nominais, regras de créditos cumulativos e a transição gradual sem despender horas montando planilhas manuais.
+              </p>
+              
+              {/* Highlight card com borda esquerda azul */}
+              <div className="bg-slate-50 border-l-4 border-[#1d63d8] p-5 rounded-r-xl shadow-sm text-slate-800 font-semibold text-sm sm:text-base">
+                Com o Manual Tributário, você traduz a complexidade da legislação em pareceres estratégicos e visuais que encantam o cliente
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+
+      {/* =========================================================================
+          3. SEÇÃO: VANTAGENS EXCLUSIVAS (6 Cards em Azul Marinho Claro)
+         ========================================================================= */}
+      <section id="beneficios-section" className="py-24 bg-[#081b3a] border-y border-blue-800/40">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          
+          <div className="max-w-3xl mx-auto mb-16 space-y-3">
+            <span className="text-xs font-bold text-sky-400 uppercase tracking-widest">
+              VANTAGENS EXCLUSIVAS
+            </span>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight">
+              Da conferência rápida ao parecer executivo
+            </h2>
+            <p className="text-slate-300 text-sm sm:text-base">
+              Uma solução prática para projetar, justificar e valorizar a sua consultoria contábil
+            </p>
+          </div>
+
+          {/* Grid de 6 Blocos Numéricos (01 a 06) */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 text-left">
+            
+            {/* Card 01 */}
+            <div className="bg-[#0e2750] border border-blue-700/60 rounded-2xl p-7 flex flex-col justify-between transition-all hover:border-blue-500 shadow-xl">
+              <div>
+                <div className="w-8 h-8 rounded-lg bg-[#1d63d8] text-white font-extrabold text-xs flex items-center justify-center mb-5 shadow">
+                  01
+                </div>
+                <h3 className="text-lg font-bold text-white mb-2">Confronte os regimes</h3>
+                <p className="text-slate-300 text-xs sm:text-sm leading-relaxed">
+                  Analise em paralelo a Guia Única do Simples, a modalidade híbrida e o Lucro Presumido.
+                </p>
+              </div>
+            </div>
+
+            {/* Card 02 */}
+            <div className="bg-[#0e2750] border border-blue-700/60 rounded-2xl p-7 flex flex-col justify-between transition-all hover:border-blue-500 shadow-xl">
+              <div>
+                <div className="w-8 h-8 rounded-lg bg-[#1d63d8] text-white font-extrabold text-xs flex items-center justify-center mb-5 shadow">
+                  02
+                </div>
+                <h3 className="text-lg font-bold text-white mb-2">Projete a transição inteira</h3>
+                <p className="text-slate-300 text-xs sm:text-sm leading-relaxed">
+                  Monitore cada fase de 2027 até 2033 com atualização automática das proporções de tributos.
+                </p>
+              </div>
+            </div>
+
+            {/* Card 03 */}
+            <div className="bg-[#0e2750] border border-blue-700/60 rounded-2xl p-7 flex flex-col justify-between transition-all hover:border-blue-500 shadow-xl">
+              <div>
+                <div className="w-8 h-8 rounded-lg bg-[#1d63d8] text-white font-extrabold text-xs flex items-center justify-center mb-5 shadow">
+                  03
+                </div>
+                <h3 className="text-lg font-bold text-white mb-2">Configure os parâmetros</h3>
+                <p className="text-slate-300 text-xs sm:text-sm leading-relaxed">
+                  Edite percentuais, composições de custos e alíquotas conforme as peculiaridades do setor.
+                </p>
+              </div>
+            </div>
+
+            {/* Card 04 */}
+            <div className="bg-[#0e2750] border border-blue-700/60 rounded-2xl p-7 flex flex-col justify-between transition-all hover:border-blue-500 shadow-xl">
+              <div>
+                <div className="w-8 h-8 rounded-lg bg-[#1d63d8] text-white font-extrabold text-xs flex items-center justify-center mb-5 shadow">
+                  04
+                </div>
+                <h3 className="text-lg font-bold text-white mb-2">Demonstre o fluxo financeiro</h3>
+                <p className="text-slate-300 text-xs sm:text-sm leading-relaxed">
+                  Apresente alíquota real, crédito transferível a compradores e oscilação de caixa.
+                </p>
+              </div>
+            </div>
+
+            {/* Card 05 */}
+            <div className="bg-[#0e2750] border border-blue-700/60 rounded-2xl p-7 flex flex-col justify-between transition-all hover:border-blue-500 shadow-xl">
+              <div>
+                <div className="w-8 h-8 rounded-lg bg-[#1d63d8] text-white font-extrabold text-xs flex items-center justify-center mb-5 shadow">
+                  05
+                </div>
+                <h3 className="text-lg font-bold text-white mb-2">Exporte relatórios formais</h3>
+                <p className="text-slate-300 text-xs sm:text-sm leading-relaxed">
+                  Produza documentos em PDF com o logotipo, dados de contato e registro CRC do escritório.
+                </p>
+              </div>
+            </div>
+
+            {/* Card 06 */}
+            <div className="bg-[#0e2750] border border-blue-700/60 rounded-2xl p-7 flex flex-col justify-between transition-all hover:border-blue-500 shadow-xl">
+              <div>
+                <div className="w-8 h-8 rounded-lg bg-[#1d63d8] text-white font-extrabold text-xs flex items-center justify-center mb-5 shadow">
+                  06
+                </div>
+                <h3 className="text-lg font-bold text-white mb-2">Armazenamento prático</h3>
+                <p className="text-slate-300 text-xs sm:text-sm leading-relaxed">
+                  Conserve o histórico das empresas cadastradas no navegador para consultas futuras.
+                </p>
+              </div>
+            </div>
+
+          </div>
+
+          {/* Botão de compra intermediário + Checklist */}
+          <div className="mt-12 flex flex-col items-center">
+            <button
+              onClick={() => onOpenCheckout("47")}
+              className="bg-[#1d63d8] hover:bg-[#2563eb] text-white font-bold text-sm sm:text-base px-8 py-4 rounded-xl shadow-xl shadow-blue-950/80 hover:shadow-blue-600/40 transition-all inline-flex items-center gap-3 cursor-pointer group"
+            >
+              <span className="uppercase tracking-wide">Obter o Manual Tributário por R$ 47</span>
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </button>
+
+            <CtaChecklist darkTheme={true} />
+          </div>
+
+        </div>
+      </section>
+
+
+      {/* =========================================================================
+          4. SEÇÃO: RELATÓRIO REAL (Fundo Branco Iluminado)
+         ========================================================================= */}
+      <section className="py-24 bg-white text-slate-900">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            
+            {/* Esquerda: Mockup do Relatório Real Impresso / PDF */}
+            <div className="lg:col-span-6">
+              <div className="bg-slate-50 border border-slate-200 rounded-2xl shadow-xl p-5 sm:p-6 text-slate-800 space-y-4">
+                
+                {/* Header do Relatório */}
+                <div className="flex items-center justify-between pb-3 border-b border-slate-200">
+                  <div className="flex items-center gap-2">
+                    <span className="text-[10px] bg-slate-200 text-slate-700 font-bold px-2 py-0.5 rounded">
+                      Gerar Parecer / PDF
+                    </span>
+                    <span className="text-[10px] text-slate-500">Painel do Manual</span>
+                  </div>
+                  <span className="bg-[#1d63d8] text-white text-[10px] font-extrabold uppercase px-2 py-0.5 rounded">
+                    Diagnóstico Executivo
+                  </span>
+                </div>
+
+                {/* Cabeçalho do Escritório */}
+                <div className="bg-white p-3 rounded-lg border border-slate-200 text-xs">
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <span className="text-[9px] text-slate-400 uppercase font-bold block">PARECER • REFORMA TRIBUTÁRIA</span>
+                      <h4 className="font-extrabold text-sm text-slate-900">Consultoria Contábil Modelo</h4>
+                      <p className="text-[10px] text-slate-500">CRC 123.456/O • (11) 98765-4321</p>
+                    </div>
+                    <div className="text-right text-[10px] text-slate-500">
+                      <div>Empresa: <strong>COMERCIAL ALIMENTOS LTDA</strong></div>
+                      <div>Ramo: Distribuição e Serviços</div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* 4 Cards de Resumo */}
+                <div className="grid grid-cols-4 gap-2 text-center text-xs">
+                  <div className="bg-emerald-50 border border-emerald-200 p-2 rounded">
+                    <span className="text-[9px] text-emerald-800 font-bold block">Melhor opção no caixa</span>
+                    <span className="text-xs font-black text-emerald-700">Guia Única</span>
+                  </div>
+                  <div className="bg-white border border-slate-200 p-2 rounded">
+                    <span className="text-[9px] text-slate-500 block">Diferença no mês</span>
+                    <span className="text-xs font-bold text-slate-800">R$ 11.367</span>
+                  </div>
+                  <div className="bg-white border border-slate-200 p-2 rounded">
+                    <span className="text-[9px] text-slate-500 block">Impacto anual</span>
+                    <span className="text-xs font-bold text-slate-800">R$ 136.404</span>
+                  </div>
+                  <div className="bg-white border border-slate-200 p-2 rounded">
+                    <span className="text-[9px] text-slate-500 block">Crédito gerado</span>
+                    <span className="text-xs font-bold text-slate-800">R$ 975</span>
+                  </div>
+                </div>
+
+                {/* Gráfico Comparativo de Barras */}
+                <div className="bg-white p-3 rounded-lg border border-slate-200">
+                  <span className="text-[10px] font-bold text-slate-700 block mb-2">
+                    DESEMBOLSO ESTIMADO POR REGIME — ANO 2027
+                  </span>
+                  <div className="h-20 flex items-end justify-around gap-4 pt-2 pb-1 border-b border-slate-200">
+                    <div className="flex flex-col items-center gap-1 w-16">
+                      <span className="text-[9px] font-bold text-emerald-700">R$ 10.443</span>
+                      <div className="w-full bg-emerald-500 rounded-t h-10" />
+                      <span className="text-[8px] text-slate-600 font-semibold">Guia Única</span>
+                    </div>
+                    <div className="flex flex-col items-center gap-1 w-16">
+                      <span className="text-[9px] font-bold text-sky-700">R$ 15.348</span>
+                      <div className="w-full bg-sky-500 rounded-t h-14" />
+                      <span className="text-[8px] text-slate-600 font-semibold">Híbrido</span>
+                    </div>
+                    <div className="flex flex-col items-center gap-1 w-16">
+                      <span className="text-[9px] font-bold text-slate-700">R$ 21.810</span>
+                      <div className="w-full bg-slate-700 rounded-t h-18" />
+                      <span className="text-[8px] text-slate-600 font-semibold">Presumido</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Diagnóstico & Orientação */}
+                <div className="bg-slate-100 p-3 rounded-lg border border-slate-200 text-[10px] text-slate-700 leading-relaxed">
+                  <strong className="block text-slate-900 mb-0.5">PARECER TÉCNICO ESTRATÉGICO</strong>
+                  Para o anocalendário de 2027, a alternativa com menor impacto financeiro direto é a <strong>Guia Única</strong>, totalizando <strong>R$ 10.443 mensais</strong>. A diferença em relação ao regime mais oneroso atinge R$ 11.367 ao mês (R$ 136.404 no ano fiscal).
+                </div>
+
+              </div>
+            </div>
+
+            {/* Direita: Explicação de Valor */}
+            <div className="lg:col-span-6 space-y-6">
+              <span className="text-xs font-bold text-[#1d63d8] uppercase tracking-widest block">
+                COMUNICAÇÃO DE VALOR
+              </span>
+              <h2 className="text-3xl sm:text-4xl lg:text-[40px] font-extrabold text-slate-950 tracking-tight leading-[1.15]">
+                Transforme dados fiscais em uma apresentação intuitiva que o empresário valoriza
+              </h2>
+              <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
+                O documento sintetiza a escolha ideal, a economia anual estimada, os créditos concedidos a clientes e a partilha individual de cada tributo.
+              </p>
+
+              {/* Quote Box */}
+              <div className="bg-slate-50 border border-slate-200 p-5 rounded-xl text-slate-800 text-sm sm:text-base leading-snug">
+                <strong>Quando o posicionamento contábil é fundamentado em dados visuais e cálculos transparentes, a reunião se transforma em uma verdadeira consultoria de negócios</strong>
+              </div>
+
+              {/* Checklist */}
+              <div className="flex flex-wrap items-center gap-6 text-xs sm:text-sm text-slate-700 font-semibold pt-2">
+                <div className="flex items-center gap-1.5">
+                  <Check className="w-4 h-4 text-[#1d63d8]" />
+                  <span>Apresentação executiva</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <Check className="w-4 h-4 text-[#1d63d8]" />
+                  <span>Personalizado com seu CRC</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <Check className="w-4 h-4 text-[#1d63d8]" />
+                  <span>Exportação instantânea para PDF</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+
+      {/* =========================================================================
+          5. SEÇÃO: DEPOIMENTOS E REPERCUSSÃO (Fundo Suave Iluminado)
+         ========================================================================= */}
+      <section className="py-24 bg-[#f8fafc] text-slate-900 border-t border-slate-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          
+          <div className="max-w-3xl mx-auto mb-16 space-y-3">
+            <span className="text-xs font-bold text-[#1d63d8] uppercase tracking-widest">
+              OPINIÃO DE QUEM UTILIZA
+            </span>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-950 tracking-tight">
+              Feedback espontâneo de contadores e consultores
+            </h2>
+            <p className="text-slate-600 text-sm sm:text-base">
+              Relatos reais de profissionais que utilizam o Manual Tributário no dia a dia com seus clientes
+            </p>
+          </div>
+
+          {/* 3 Mockups de Redes Sociais / Mensagens */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left items-start">
+            
+            {/* 1. WhatsApp Print */}
+            <div className="bg-white border border-slate-200 rounded-2xl shadow-md overflow-hidden">
+              <div className="bg-[#075e54] text-white p-3.5 flex items-center justify-between text-xs font-semibold">
+                <div className="flex items-center gap-2">
+                  <div className="w-7 h-7 rounded-full bg-slate-200 text-slate-700 flex items-center justify-center font-bold text-[10px]">
+                    R
+                  </div>
+                  <div>
+                    <span className="block font-bold">Roberto • Escritório SP</span>
+                    <span className="text-[10px] text-emerald-200">online</span>
+                  </div>
+                </div>
+                <span className="text-[10px] text-emerald-200">Ontem</span>
+              </div>
+
+              {/* Chat Body */}
+              <div className="p-4 bg-[#e5ddd5] space-y-3 min-h-[190px] text-xs">
+                {/* Mensagem enviada */}
+                <div className="flex justify-end">
+                  <div className="bg-[#dcf8c6] text-slate-800 p-2.5 rounded-lg rounded-tr-none shadow-sm max-w-[85%] text-[11px]">
+                    Olá Roberto, como foi a utilização do Manual Tributário nos atendimentos?
+                    <span className="block text-[8px] text-right text-slate-400 mt-1">17:40</span>
+                  </div>
+                </div>
+
+                {/* Mensagem recebida */}
+                <div className="flex justify-start">
+                  <div className="bg-white text-slate-800 p-2.5 rounded-lg rounded-tl-none shadow-sm max-w-[85%] text-[11px]">
+                    Boa tarde! Apresentei o diagnóstico para dois clientes do comércio e <strong>a visualização gráfica facilitou demais a explicação</strong>. Excelente material!
+                    <span className="block text-[8px] text-right text-slate-400 mt-1">18:05</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="p-2.5 bg-slate-50 border-t border-slate-200 text-[10px] text-slate-500 font-semibold flex items-center gap-1.5">
+                <MessageCircle className="w-3.5 h-3.5 text-emerald-600" />
+                <span>WhatsApp • atendimento contábil</span>
+              </div>
+            </div>
+
+            {/* 2. Instagram Direct Print */}
+            <div className="bg-white border border-slate-200 rounded-2xl shadow-md overflow-hidden">
+              <div className="bg-slate-900 text-white p-3.5 flex items-center justify-between text-xs font-semibold">
+                <div className="flex items-center gap-2">
+                  <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-amber-500 via-rose-500 to-purple-600 text-white flex items-center justify-center font-bold text-[10px]">
+                    C
+                  </div>
+                  <div>
+                    <span className="block font-bold">Camila • Tributarista</span>
+                    <span className="text-[10px] text-slate-400">Mensagem Direta</span>
+                  </div>
+                </div>
+                <span className="text-[10px] text-slate-400">HOJE</span>
+              </div>
+
+              {/* Chat Body */}
+              <div className="p-4 bg-slate-50 space-y-3 min-h-[190px] text-xs">
+                {/* Mensagem recebida */}
+                <div className="flex justify-start">
+                  <div className="bg-slate-200 text-slate-900 p-3 rounded-2xl rounded-tl-none shadow-sm max-w-[85%] text-[11px]">
+                    Parabéns pelo trabalho! As projeções da transição 2027 a 2033 ficaram super completas e <strong>economizam um tempo enorme de consultoria</strong>.
+                  </div>
+                </div>
+
+                {/* Mensagem enviada */}
+                <div className="flex justify-end">
+                  <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-3 rounded-2xl rounded-tr-none shadow-sm max-w-[85%] text-[11px]">
+                    Ficamos muito contentes com o retorno, Camila! Conte conosco sempre que precisar!
+                  </div>
+                </div>
+              </div>
+
+              <div className="p-2.5 bg-slate-100 border-t border-slate-200 text-[10px] text-slate-500 font-semibold flex items-center gap-1.5">
+                <Instagram className="w-3.5 h-3.5 text-rose-500" />
+                <span>Instagram • mensagem privada</span>
+              </div>
+            </div>
+
+            {/* 3. Facebook / Post Comments Print */}
+            <div className="bg-white border border-slate-200 rounded-2xl shadow-md overflow-hidden">
+              <div className="p-3 border-b border-slate-200 flex items-center justify-between text-xs">
+                <div className="flex items-center gap-2">
+                  <div className="w-5 h-5 rounded bg-blue-600 text-white flex items-center justify-center font-bold text-[9px]">
+                    MT
+                  </div>
+                  <div>
+                    <span className="font-bold text-slate-900 block text-[11px]">Manual Tributário</span>
+                    <span className="text-[9px] text-slate-400">Atualização Profissional</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="p-3.5 bg-white space-y-3 min-h-[190px] text-xs">
+                <p className="text-[11px] text-slate-600 italic">
+                  "Como projetar com precisão o impacto da Reforma nos regimes de 2027 a 2033..."
+                </p>
+
+                <div className="bg-slate-50 p-2.5 rounded-lg border border-slate-100 space-y-1">
+                  <div className="flex items-center gap-1.5">
+                    <span className="font-bold text-slate-900 text-[11px]">Marcos Aurélio Contador</span>
+                    <span className="text-[9px] text-slate-400">• há 2 dias</span>
+                  </div>
+                  <p className="text-[11px] text-slate-700">
+                    Ferramenta muito didática e robusta. Auxiliou bastante no planejamento tributário da nossa carteira.
+                  </p>
+                </div>
+
+                <div className="bg-slate-50 p-2.5 rounded-lg border border-slate-100 space-y-1">
+                  <div className="flex items-center gap-1.5">
+                    <span className="font-bold text-slate-900 text-[11px]">Luciana Silva</span>
+                    <span className="text-[9px] text-slate-400">• há 5 dias</span>
+                  </div>
+                  <p className="text-[11px] text-slate-700">
+                    Prático, rápido e direto ao ponto. Os relatórios passam muita credibilidade aos clientes 👏👏
+                  </p>
+                </div>
+              </div>
+
+              <div className="p-2.5 bg-slate-100 border-t border-slate-200 text-[10px] text-slate-500 font-semibold flex items-center gap-1.5">
+                <Facebook className="w-3.5 h-3.5 text-blue-600" />
+                <span>Comentários de usuários e profissionais</span>
+              </div>
+            </div>
+
+          </div>
+
+          <div className="text-center text-[11px] text-slate-500 mt-6">
+            Depoimentos espontâneos de clientes e parceiros. Dados protegidos conforme política de privacidade.
+          </div>
+
+        </div>
+      </section>
+
+
+      {/* =========================================================================
+          6. SEÇÃO: CONDIÇÃO PROMOCIONAL (Azul Marinho Real)
+         ========================================================================= */}
+      <section id="oferta-section" className="py-24 bg-[#081b3a] border-t border-blue-800/40">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            
+            {/* Esquerda: Explicação da Oferta */}
+            <div className="lg:col-span-6 space-y-6 text-left">
+              <span className="text-xs font-bold text-sky-400 uppercase tracking-widest block">
+                CONDIÇÃO ESPECIAL DE ADESÃO
+              </span>
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight leading-[1.15]">
+                Tenha respostas sólidas e estruturadas em cada atendimento
+              </h2>
+              <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
+                Garanta o acesso ao simulador completo e ao guia orientativo em uma entrega digital imediata.
+              </p>
+
+              {/* Card de Manual Incluso */}
+              <div className="bg-[#0e2750] border border-blue-700/70 p-5 rounded-2xl flex items-center gap-4 shadow-xl">
+                <div className="w-12 h-14 rounded-lg bg-blue-950 border border-blue-500 flex items-center justify-center text-sky-400 shrink-0">
+                  <FileText className="w-6 h-6" />
+                </div>
+                <div>
+                  <h4 className="font-bold text-white text-sm">Guia Prático e Metodológico Incluso</h4>
+                  <p className="text-xs text-slate-300 mt-0.5">
+                    Instruções sobre parâmetros, interpretação de índices, regras de créditos e relatórios.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Direita: O Card de Preço R$ 47 + Checklist */}
+            <div className="lg:col-span-6">
+              <div className="bg-[#0e2750] border-2 border-blue-500 rounded-3xl p-8 sm:p-10 shadow-2xl shadow-black/80 relative text-left">
+                
+                <div className="space-y-4 mb-6">
+                  <span className="text-[11px] font-bold text-sky-300 uppercase tracking-wider block">
+                    LICENÇA PROFISSIONAL PARA CONTADORES
+                  </span>
+                  <h3 className="text-2xl font-extrabold text-white">
+                    Manual Tributário • Simulador da Reforma
+                  </h3>
+                </div>
+
+                {/* Lista de Recursos com Checks */}
+                <div className="space-y-3 mb-8 text-xs sm:text-sm text-slate-200">
+                  <div className="flex items-center gap-2.5">
+                    <Check className="w-4 h-4 text-sky-400 shrink-0" />
+                    <span>Confronto completo dos 3 enquadramentos</span>
+                  </div>
+                  <div className="flex items-center gap-2.5">
+                    <Check className="w-4 h-4 text-sky-400 shrink-0" />
+                    <span>Transição detalhada de 2027 a 2033</span>
+                  </div>
+                  <div className="flex items-center gap-2.5">
+                    <Check className="w-4 h-4 text-sky-400 shrink-0" />
+                    <span>Relatórios técnicos com sua identificação</span>
+                  </div>
+                  <div className="flex items-center gap-2.5">
+                    <Check className="w-4 h-4 text-sky-400 shrink-0" />
+                    <span>Carteira de clientes gravada no dispositivo</span>
+                  </div>
+                  <div className="flex items-center gap-2.5">
+                    <Check className="w-4 h-4 text-sky-400 shrink-0" />
+                    <span>Guia metodológico de apoio</span>
+                  </div>
+                </div>
+
+                {/* Preço de R$ 47 */}
+                <div className="pt-4 pb-6 border-t border-blue-800/60 text-center">
+                  <span className="text-[11px] font-bold text-slate-300 uppercase tracking-wider block mb-1">
+                    VALOR PROMOCIONAL ÚNICO:
+                  </span>
+                  <div className="flex items-baseline justify-center gap-1 text-white font-mono">
+                    <span className="text-xl font-bold">R$</span>
+                    <span className="text-5xl sm:text-6xl font-black tracking-tight">47</span>
+                  </div>
+                  <span className="text-xs font-semibold text-sky-200 block mt-1">
+                    no Pix com ativação imediata
+                  </span>
+                  <span className="text-[11px] text-slate-300 block">
+                    ou parcelado em até <strong>10x no cartão</strong>
+                  </span>
+                </div>
+
+                {/* Botão de Compra */}
+                <button
+                  id="pricing-card-btn"
+                  onClick={() => onOpenCheckout("47")}
+                  className="w-full bg-[#1d63d8] hover:bg-[#2563eb] text-white font-extrabold text-base py-4 rounded-xl shadow-xl shadow-blue-950/80 hover:shadow-blue-600/40 transition-all flex items-center justify-center gap-2 cursor-pointer uppercase tracking-wide group"
+                >
+                  <span>Garantir o Manual Tributário por R$ 47</span>
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </button>
+
+                {/* Checklist Exato embaixo do CTA */}
+                <div className="mt-3">
+                  <CtaChecklist darkTheme={true} />
+                </div>
+
+                <div className="text-center text-[10px] text-slate-400 mt-4">
+                  Transação segura • Envio digital • Acesso ilimitado
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+
+      {/* =========================================================================
+          7. SEÇÃO: DÚVIDAS FREQUENTES (Fundo Branco Iluminado)
+         ========================================================================= */}
+      <section id="duvidas-section" className="py-24 bg-white text-slate-900 border-t border-slate-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+            
+            {/* Esquerda: Título */}
+            <div className="lg:col-span-5 space-y-3 text-left">
+              <span className="text-xs font-bold text-[#1d63d8] uppercase tracking-widest block">
+                ESCLARECIMENTOS GERAIS
+              </span>
+              <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-extrabold text-slate-950 tracking-tight leading-[1.15]">
+                Dúvidas comuns antes de adquirir
+              </h2>
+              <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
+                Conheça como a plataforma opera e como ela potencializa a produtividade do seu escritório.
+              </p>
+            </div>
+
+            {/* Direita: Acordeão de Dúvidas */}
+            <div className="lg:col-span-7 space-y-4 text-left">
+              {faqs.map((faq, idx) => {
+                const isOpen = openFaq === idx;
+                return (
+                  <div 
+                    key={idx} 
+                    className="border-b border-slate-200 pb-4 transition-all"
+                  >
+                    <button
+                      onClick={() => toggleFaq(idx)}
+                      className="w-full flex items-center justify-between text-left py-2 text-sm sm:text-base font-bold text-slate-900 hover:text-[#1d63d8] transition-colors cursor-pointer"
+                    >
+                      <span className="pr-4">{faq.q}</span>
+                      <span className="text-[#1d63d8] font-bold text-lg shrink-0">
+                        {isOpen ? "×" : "+"}
+                      </span>
+                    </button>
+
+                    {isOpen && (
+                      <div className="mt-2 text-xs sm:text-sm text-slate-600 leading-relaxed pr-6">
+                        {faq.a}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+
+      {/* =========================================================================
+          8. BANNER AZUL ROYAL DE FECHAMENTO
+         ========================================================================= */}
+      <section className="py-20 bg-[#124cb4] text-white text-center">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+          
+          <span className="text-xs font-extrabold text-sky-200 uppercase tracking-widest block">
+            PREPARE SEU ESCRITÓRIO PARA A TRANSIÇÃO TRIBUTÁRIA
+          </span>
+
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight">
+            Tenha diagnósticos precisos e antecipe as demandas dos seus clientes
+          </h2>
+
+          <div className="pt-2 flex flex-col items-center">
+            <button
+              onClick={() => onOpenCheckout("47")}
+              className="bg-white hover:bg-slate-100 text-[#124cb4] font-extrabold text-sm sm:text-base px-8 py-4 rounded-xl shadow-xl transition-all inline-flex items-center gap-3 cursor-pointer group"
+            >
+              <span className="uppercase tracking-wide">Acessar o Manual Tributário por R$ 47</span>
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </button>
+
+            {/* Checklist Exato embaixo do CTA */}
+            <div className="mt-2">
+              <CtaChecklist darkTheme={true} />
+            </div>
+          </div>
+
+          <p className="text-xs text-sky-200 font-medium">
+            Simulações seguras • Comparativos transparentes • Relatórios profissionais
+          </p>
+
+        </div>
+      </section>
+
+
+      {/* =========================================================================
+          9. FOOTER
+         ========================================================================= */}
+      <footer className="py-10 bg-white border-t border-slate-200 text-xs text-slate-500">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
+          
+          {/* Logo e Aviso */}
+          <div className="flex items-center gap-4 text-left">
+            <div className="flex items-center gap-2 font-bold text-base text-[#1d63d8] shrink-0">
+              <div className="w-6 h-6 rounded bg-blue-600 text-white flex items-center justify-center font-mono text-xs">
+                MT
+              </div>
+              <span className="font-sans text-slate-900">Manual Tributário</span>
+            </div>
+            <p className="text-[11px] text-slate-500 max-w-xl">
+              Plataforma de Simulação e Pareceres da Reforma Tributária • Versão Profissional. <br />
+              Instrumento analítico de auxílio à decisão contábil e empresarial.
+            </p>
+          </div>
+
+          {/* Voltar ao Topo */}
+          <button
+            onClick={scrollToTop}
+            className="text-xs font-semibold text-[#1d63d8] hover:underline cursor-pointer shrink-0"
+          >
+            Retornar ao topo ↑
+          </button>
+
+        </div>
+      </footer>
+
+    </div>
+  );
+};
