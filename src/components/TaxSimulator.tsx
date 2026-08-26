@@ -69,6 +69,7 @@ export const TaxSimulator: React.FC<TaxSimulatorProps> = ({
 }) => {
   // Current company profile state
   const [profile, setProfile] = useState<CompanyTaxProfile>(PRESET_COMPANIES[0].profile);
+  const [selectedYear, setSelectedYear] = useState<number>(2027);
   const [activeTab, setActiveTab] = useState<"OVERVIEW" | "TRANSITION" | "SPLIT_PAYMENT" | "B2B_PRICING" | "AI_DIAGNOSIS">("OVERVIEW");
   const [aiReport, setAiReport] = useState<string | null>(null);
   const [isGeneratingAi, setIsGeneratingAi] = useState<boolean>(false);
@@ -78,6 +79,65 @@ export const TaxSimulator: React.FC<TaxSimulatorProps> = ({
   const simulation = useMemo(() => {
     return calculateSimulation(profile);
   }, [profile]);
+
+  // Year comparison data for the 3 distinct regimes in the chosen year
+  const yearComparison = useMemo(() => {
+    const rev = Math.max(0, profile.monthlyRevenue);
+    const purchases = Math.max(0, profile.monthlyPurchasesWithCredit);
+    const payroll = Math.max(0, profile.monthlyPayroll);
+    const valueAdded = Math.max(0, rev - purchases);
+
+    // 1. Guia Única (DAS Tradicional)
+    const dasTotal = simulation.currentBreakdown.totalTax;
+    const dasRate = simulation.currentBreakdown.effectiveRate;
+    const dasCredit = profile.currentRegime === "SIMPLES_NACIONAL" 
+      ? rev * 0.0392 // ~3.92% de crédito médio
+      : rev * 0.0925; // PIS/COFINS não-cumulativo
+
+    // 2. Regime Híbrido (IBS/CBS por fora + tributos diretos no DAS)
+    // Na transição de 2027 a CBS é 8.8% e IBS 0.1%, até 2033 com IBS 17.7%
+    const cbsRate = 0.088 * (1 - (ACTIVITY_METADATA[profile.activityCategory]?.reductionPercent || 0) / 100);
+    const ibsRate = (selectedYear >= 2033 ? 0.177 : selectedYear >= 2029 ? 0.177 * ((selectedYear - 2028) / 5) : 0.001) * (1 - (ACTIVITY_METADATA[profile.activityCategory]?.reductionPercent || 0) / 100);
+    
+    const cbsMonthly = valueAdded * cbsRate;
+    const ibsMonthly = valueAdded * ibsRate;
+    const directTaxSimples = dasTotal * 0.45; // IRPJ + CSLL + CPP no DAS
+    const hibridoTotal = directTaxSimples + cbsMonthly + ibsMonthly;
+    const hibridoRate = rev > 0 ? (hibridoTotal / rev) * 100 : 0;
+    const hibridoCredit = (rev * cbsRate) + (rev * ibsRate);
+
+    // 3. Lucro Presumido
+    const isService = profile.activityCategory.includes("SERVICO") || profile.simplesAnexo === "III" || profile.simplesAnexo === "IV" || profile.simplesAnexo === "V";
+    const presumpBase = isService ? 0.32 : 0.08;
+    const irpj = (rev * presumpBase * 0.15) + (rev * presumpBase > 20000 ? (rev * presumpBase - 20000) * 0.10 : 0);
+    const csll = rev * (isService ? 0.32 : 0.12) * 0.09;
+    const cpp = payroll * 0.20;
+    const presumidoTotal = irpj + csll + cpp + cbsMonthly + ibsMonthly;
+    const presumidoRate = rev > 0 ? (presumidoTotal / rev) * 100 : 0;
+    const presumidoCredit = (rev * cbsRate) + (rev * ibsRate);
+
+    // Identificar o mais econômico
+    const options = [
+      { id: "DAS", label: "Guia Única DAS", total: dasTotal, rate: dasRate, credit: dasCredit },
+      { id: "HIBRIDO", label: "Regime Híbrido (IBS/CBS fora)", total: hibridoTotal, rate: hibridoRate, credit: hibridoCredit },
+      { id: "PRESUMIDO", label: "Lucro Presumido", total: presumidoTotal, rate: presumidoRate, credit: presumidoCredit }
+    ];
+    const lowest = [...options].sort((a, b) => a.total - b.total)[0];
+
+    return {
+      dasTotal,
+      dasRate: Number(dasRate.toFixed(2)),
+      dasCredit,
+      hibridoTotal,
+      hibridoRate: Number(hibridoRate.toFixed(2)),
+      hibridoCredit,
+      presumidoTotal,
+      presumidoRate: Number(presumidoRate.toFixed(2)),
+      presumidoCredit,
+      lowestId: lowest.id,
+      economyVsLowest: Math.abs(hibridoTotal - dasTotal)
+    };
+  }, [profile, simulation, selectedYear]);
 
   // Handle Preset Load
   const handleLoadPreset = (presetId: string) => {
@@ -574,6 +634,186 @@ export const TaxSimulator: React.FC<TaxSimulatorProps> = ({
             {/* TAB 1: OVERVIEW & GENERAL IMPACT */}
             {activeTab === "OVERVIEW" && (
               <div className="space-y-6">
+
+                {/* 1. SELETOR DE ANO DA TRANSIÇÃO (2026 - 2033) */}
+                <div className="bg-[#0b1f44] border border-blue-800/60 rounded-2xl p-4 sm:p-5 shadow-xl space-y-3">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-blue-900/60 pb-3">
+                    <div className="flex items-center gap-2">
+                      <Calendar className="w-4 h-4 text-sky-400" />
+                      <span className="text-xs font-bold uppercase tracking-wider text-white">
+                        Simular Ano da Transição:
+                      </span>
+                    </div>
+                    <span className="text-xs text-sky-300 font-medium">
+                      {selectedYear === 2026 && "Ano Teste: CBS 0,9% + IBS 0,1% compensáveis"}
+                      {selectedYear === 2027 && "Ano 2027: CBS 8,8% integral + PIS/COFINS extintos + IBS 0,1%"}
+                      {selectedYear >= 2028 && selectedYear <= 2032 && `Ano ${selectedYear}: Transição progressiva ICMS/ISS para IBS`}
+                      {selectedYear === 2033 && "Ano 2033: Novo Sistema 100% Pleno (IBS + CBS definitivos)"}
+                    </span>
+                  </div>
+
+                  {/* Pills dos Anos */}
+                  <div className="grid grid-cols-4 sm:grid-cols-8 gap-1.5">
+                    {[2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033].map((yr) => (
+                      <button
+                        key={yr}
+                        type="button"
+                        onClick={() => setSelectedYear(yr)}
+                        className={`py-2 px-1 text-center rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                          selectedYear === yr
+                            ? "bg-[#1d63d8] text-white shadow-lg shadow-blue-900/60 ring-2 ring-sky-400"
+                            : "bg-slate-900 text-slate-400 hover:text-white hover:bg-slate-800 border border-slate-800"
+                        }`}
+                      >
+                        {yr}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* 2. OS 3 REGIMES COMPARADOS LADO A LADO NO ANO SELECIONADO */}
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-2">
+                      <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
+                      Comparativo de Regimes em {selectedYear}
+                    </h3>
+                    <span className="text-[11px] text-slate-400">
+                      Valores mensais calculados para este faturamento
+                    </span>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    {/* Card 1: Guia Única (DAS) */}
+                    <div className={`p-4 rounded-2xl border transition-all ${
+                      yearComparison.lowestId === "DAS"
+                        ? "bg-slate-900/90 border-emerald-500/80 shadow-lg shadow-emerald-950/40 relative"
+                        : "bg-slate-900/70 border-slate-800"
+                    }`}>
+                      {yearComparison.lowestId === "DAS" && (
+                        <span className="absolute -top-2.5 right-4 bg-emerald-600 text-white text-[9px] font-extrabold uppercase px-2 py-0.5 rounded-full shadow">
+                          MAIS ECONÔMICO
+                        </span>
+                      )}
+                      <div className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">
+                        1. Guia Única (DAS)
+                      </div>
+                      <div className="text-2xl font-black text-white font-mono">
+                        R$ {yearComparison.dasTotal.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
+                      </div>
+                      <div className="text-xs text-slate-400 mt-1">
+                        Alíq. Efetiva: <strong className="text-slate-200">{yearComparison.dasRate}%</strong>
+                      </div>
+
+                      <div className="mt-4 pt-3 border-t border-slate-800 space-y-1.5 text-xs">
+                        <div className="flex justify-between text-slate-400">
+                          <span>Crédito gerado p/ PJ:</span>
+                          <strong className="text-emerald-400 font-mono">
+                            R$ {yearComparison.dasCredit.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
+                          </strong>
+                        </div>
+                        <div className="text-[10px] text-slate-500">
+                          *Cliente B2B toma crédito reduzido (~3,9%).
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Card 2: Regime Híbrido (IBS/CBS por fora) */}
+                    <div className={`p-4 rounded-2xl border transition-all ${
+                      yearComparison.lowestId === "HIBRIDO"
+                        ? "bg-slate-900/90 border-emerald-500/80 shadow-lg shadow-emerald-950/40 relative"
+                        : "bg-slate-900/70 border-slate-800"
+                    }`}>
+                      {yearComparison.lowestId === "HIBRIDO" && (
+                        <span className="absolute -top-2.5 right-4 bg-emerald-600 text-white text-[9px] font-extrabold uppercase px-2 py-0.5 rounded-full shadow">
+                          MAIS ECONÔMICO
+                        </span>
+                      )}
+                      <div className="text-xs font-bold text-sky-400 uppercase tracking-wider mb-1">
+                        2. Regime Híbrido
+                      </div>
+                      <div className="text-2xl font-black text-sky-300 font-mono">
+                        R$ {yearComparison.hibridoTotal.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
+                      </div>
+                      <div className="text-xs text-slate-400 mt-1">
+                        Alíq. Efetiva: <strong className="text-sky-200">{yearComparison.hibridoRate}%</strong>
+                      </div>
+
+                      <div className="mt-4 pt-3 border-t border-slate-800 space-y-1.5 text-xs">
+                        <div className="flex justify-between text-slate-400">
+                          <span>Crédito gerado p/ PJ:</span>
+                          <strong className="text-sky-400 font-mono">
+                            R$ {yearComparison.hibridoCredit.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
+                          </strong>
+                        </div>
+                        <div className="text-[10px] text-sky-400/80">
+                          *Transfere crédito integral de IBS/CBS na NF.
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Card 3: Lucro Presumido */}
+                    <div className={`p-4 rounded-2xl border transition-all ${
+                      yearComparison.lowestId === "PRESUMIDO"
+                        ? "bg-slate-900/90 border-emerald-500/80 shadow-lg shadow-emerald-950/40 relative"
+                        : "bg-slate-900/70 border-slate-800"
+                    }`}>
+                      {yearComparison.lowestId === "PRESUMIDO" && (
+                        <span className="absolute -top-2.5 right-4 bg-emerald-600 text-white text-[9px] font-extrabold uppercase px-2 py-0.5 rounded-full shadow">
+                          MAIS ECONÔMICO
+                        </span>
+                      )}
+                      <div className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">
+                        3. Lucro Presumido
+                      </div>
+                      <div className="text-2xl font-black text-slate-200 font-mono">
+                        R$ {yearComparison.presumidoTotal.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
+                      </div>
+                      <div className="text-xs text-slate-400 mt-1">
+                        Alíq. Efetiva: <strong className="text-slate-200">{yearComparison.presumidoRate}%</strong>
+                      </div>
+
+                      <div className="mt-4 pt-3 border-t border-slate-800 space-y-1.5 text-xs">
+                        <div className="flex justify-between text-slate-400">
+                          <span>Crédito gerado p/ PJ:</span>
+                          <strong className="text-slate-300 font-mono">
+                            R$ {yearComparison.presumidoCredit.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
+                          </strong>
+                        </div>
+                        <div className="text-[10px] text-slate-500">
+                          *Crédito pleno de IBS/CBS apurado.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Parecer Orientativo Automático */}
+                  <div className="p-3.5 bg-blue-950/50 border border-blue-800/50 rounded-xl flex items-center justify-between gap-3 text-xs text-slate-300">
+                    <div>
+                      <strong className="text-white">Orientação Técnica ({selectedYear}):</strong>{" "}
+                      {yearComparison.lowestId === "DAS" ? (
+                        <span>
+                          Para vendas B2C ou clientes finais, a <strong>Guia Única DAS</strong> preserva{" "}
+                          <strong className="text-emerald-400 font-mono">
+                            R$ {yearComparison.economyVsLowest.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}/mês
+                          </strong>{" "}
+                          a mais no caixa da empresa comparado ao regime híbrido.
+                        </span>
+                      ) : (
+                        <span>
+                          O <strong>Regime Híbrido</strong> é mais vantajoso estrategicamente se sua carteira for B2B, gerando mais créditos fiscais para os clientes corporativos.
+                        </span>
+                      )}
+                    </div>
+                    <button
+                      onClick={handleGenerateAiDiagnostic}
+                      className="shrink-0 bg-[#1d63d8] hover:bg-[#2563eb] text-white text-[11px] font-bold px-3 py-1.5 rounded-lg shadow cursor-pointer"
+                    >
+                      Parecer Detalhado
+                    </button>
+                  </div>
+                </div>
+
                 {/* 4 Big Impact Cards */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                   {/* Card 1: Carga Atual */}
