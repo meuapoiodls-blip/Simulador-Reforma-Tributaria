@@ -36,7 +36,7 @@ export const Header: React.FC<HeaderProps> = ({
   return (
     <header className="sticky top-0 z-50 w-full bg-[#071731]/95 backdrop-blur-md border-b border-blue-800/60 text-white shadow-2xl">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 flex items-center justify-between">
-        {/* Brand / Logo: Manual Tributário */}
+        {/* Brand / Logo: Simulador Tributário */}
         <div 
           onClick={() => {
             if (activeView === "SIMULATOR") {
@@ -53,7 +53,7 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
           <div className="flex flex-col">
             <span className="font-extrabold text-lg sm:text-xl text-white tracking-tight leading-tight">
-              Manual <span className="font-bold text-sky-400">Tributário</span>
+              Simulador <span className="font-bold text-sky-400">Tributário</span>
             </span>
             <span className="text-[9px] uppercase tracking-wider font-semibold text-slate-400">
               Reforma Tributária 2026–2033
@@ -69,15 +69,6 @@ export const Header: React.FC<HeaderProps> = ({
             className="hover:text-sky-300 transition-colors cursor-pointer text-xs sm:text-sm text-slate-300 hover:text-white"
           >
             Vantagens
-          </button>
-
-          <button
-            id="nav-btn-leitor-modulos"
-            onClick={() => scrollToSection("leitor-modulos-section")}
-            className="hover:text-sky-300 transition-colors cursor-pointer text-xs sm:text-sm text-slate-300 hover:text-white flex items-center gap-1.5"
-          >
-            <BookOpen className="w-3.5 h-3.5 text-sky-400" />
-            <span>Módulos do Manual</span>
           </button>
 
           <button

@@ -1,6 +1,6 @@
 {
-  "name": "Manual Tributário",
-  "description": "Plataforma e simulador da Reforma Tributária para contadores e empresas. Compare Simples Nacional, Modelo Híbrido e Lucro Presumido de 2027 a 2033 com geração de diagnósticos.",
+  "name": "Simulador Tributário",
+  "description": "Simulador da Reforma Tributária para contadores e empresas. Compare Simples Nacional, Regime Híbrido e Lucro Presumido de 2026 a 2033 com projeções e pareceres personalizados.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }
